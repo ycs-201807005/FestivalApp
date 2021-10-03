@@ -18,7 +18,7 @@
         tools:layout_editor_absoluteY="2dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign up"
@@ -34,7 +34,7 @@
         tools:layout_editor_absoluteY="516dp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnSignIn"
         android:layout_width="161dp"
         android:layout_height="49dp"
         android:text="Sign In"
