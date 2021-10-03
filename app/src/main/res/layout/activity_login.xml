@@ -1,80 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LoginActivity" >
+    android:background="@drawable/loginbackground"
+    android:orientation="vertical"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="409dp"
+        <!-- 로그인 박스 #RelativeLayout:centerInParent -->
+        <LinearLayout
+            android:id="@+id/layoutLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_background_roundcorner"
+            android:orientation="vertical"
+
+            android:layout_centerInParent="true">
+
+            <!-- ID 박스 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/layout_content_roundcorner">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/ic_email_lightpurple" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tvID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:paddingLeft="3dp"
+                    android:text="ID"
+                    android:textColor="#D3BFE3"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <!-- Password 박스 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_content_roundcorner">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/ic_lock_lightpurple" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tvPW"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:paddingLeft="3dp"
+                    android:text="PW"
+                    android:textColor="#D3BFE3"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <!-- 로그인 버튼 -->
+            <Button
+                android:id="@+id/btnSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/layout_button_roundcorner"
+                android:text="Sign In"
+                android:textSize="18sp"
+                app:cornerRadius="55dp" />
+
+            <!-- sign up / Forgot?-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/tvSignUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sign Up"
+                    android:textAlignment="center"
+                    android:textColor="#C0A5D7"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvForgot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Forgot Password/ID?"
+                    android:textAlignment="center"
+                    android:textColor="#C0A5D7"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutTest"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="2dp" />
+        android:layout_below="@id/layoutLogin"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        android:background="@drawable/layout_background_roundcorner_30">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign up"
-        tools:layout_editor_absoluteX="71dp"
-        tools:layout_editor_absoluteY="516dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTest"
+            android:text="테스트"
+            android:textSize="40sp"
+            android:textAlignment="center">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forgot?"
-        tools:layout_editor_absoluteX="260dp"
-        tools:layout_editor_absoluteY="516dp" />
+        </TextView>
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="161dp"
-        android:layout_height="49dp"
-        android:text="Sign In"
-        tools:layout_editor_absoluteX="134dp"
-        tools:layout_editor_absoluteY="451dp" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="62dp"
-        android:layout_height="96dp"
-        app:srcCompat="@drawable/user2"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="276dp" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="77dp"
-        android:layout_height="59dp"
-        app:srcCompat="@drawable/password"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="372dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPassword2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="124dp"
-        tools:layout_editor_absoluteY="386dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email / Username"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="121dp"
-        tools:layout_editor_absoluteY="308dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</RelativeLayout>

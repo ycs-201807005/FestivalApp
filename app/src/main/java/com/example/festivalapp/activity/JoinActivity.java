@@ -16,6 +16,7 @@ public class JoinActivity extends ConfigActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
+        /*
         btnOK = (Button)findViewById(R.id.btnOK);
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,6 +28,7 @@ public class JoinActivity extends ConfigActivity {
                 finish();
             }
         });
+        */
     }
 
 }
