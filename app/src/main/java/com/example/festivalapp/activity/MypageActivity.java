@@ -16,6 +16,7 @@ public class MypageActivity extends ConfigActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
 
+        /*
         //북마크 목록 버튼
         btnBookMarkList = (Button)findViewById(R.id.btnBookMarkList);
         btnBookMarkList.setOnClickListener(new View.OnClickListener() {
@@ -33,5 +34,6 @@ public class MypageActivity extends ConfigActivity {
                 onStartActivity(ReviewListActivity.class);
             }
         });
+        */
     }
 }

@@ -15,6 +15,10 @@ public class FirebaseFuncs {
         // 북마크 리스트 가져오기
     }
 
+    public void DeleteBookMark(){
+        // 북마크 삭제하기
+    }
+
     public void GetReviewList_My(){
         // Mypage - ReviewListActivity - 회원 리뷰 리스트 가져오기
     }

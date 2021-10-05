@@ -5,154 +5,134 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.JoinActivity" >
+    tools:context=".activity.JoinActivity">
 
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="366dp"
-        android:layout_height="2dp"
-        android:src="@android:drawable/screen_background_dark_transparent"
-        tools:layout_editor_absoluteX="22dp"
-        tools:layout_editor_absoluteY="640dp" />
+    <!-- 로그인 박스 #RelativeLayout:centerInParent -->
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="366dp"
-        android:layout_height="2dp"
-        android:src="@android:drawable/screen_background_dark_transparent"
-        tools:layout_editor_absoluteX="22dp"
-        tools:layout_editor_absoluteY="426dp" />
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/purple_200"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="2dp" />
+    <LinearLayout
+        android:id="@+id/layoutLogin"
+        android:layout_width="0dp"
+        android:layout_height="630dp"
 
-    <ImageView
-        android:id="@+id/image_email"
-        android:layout_width="86dp"
-        android:layout_height="66dp"
-        app:srcCompat="@drawable/email"
-        tools:layout_editor_absoluteX="27dp"
-        tools:layout_editor_absoluteY="179dp" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/layout_joinbackground_round"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <ImageView
-        android:id="@+id/image_password"
-        android:layout_width="82dp"
-        android:layout_height="72dp"
-        app:srcCompat="@drawable/password"
-        tools:layout_editor_absoluteX="27dp"
-        tools:layout_editor_absoluteY="245dp" />
 
-    <ImageView
-        android:id="@+id/image_user"
-        android:layout_width="82dp"
-        android:layout_height="104dp"
-        app:srcCompat="@drawable/user2"
-        tools:layout_editor_absoluteX="27dp"
-        tools:layout_editor_absoluteY="300dp" />
+        <!-- ID 박스 -->
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="139dp"
+            android:layout_height="61dp"
+            android:text="Sign up"
+            android:textSize="36dp" />
 
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="255dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/layout_content_roundcorner">
 
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="190dp" />
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="48dp"
+                app:srcCompat="@drawable/ic_email_lightpurple" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="332dp" />
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Email"
+                android:paddingLeft="3dp"
+                android:textColor="#3B025E"
+                android:textSize="25dp" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="155dp"
-        android:layout_height="67dp"
-        android:text="Sign up"
-        android:textSize="28sp"
-        tools:layout_editor_absoluteX="27dp"
-        tools:layout_editor_absoluteY="87dp" />
+        <!-- Password 박스 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_content_roundcorner">
 
-    <Button
-        android:id="@+id/btnOK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="650dp" />
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="48dp"
+                app:srcCompat="@drawable/ic_lock_lightpurple" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="86dp"
-        android:layout_height="29dp"
-        android:text="Location"
-        android:textSize="18dp"
-        tools:layout_editor_absoluteX="37dp"
-        tools:layout_editor_absoluteY="438dp" />
+            <EditText
+                android:id="@+id/etPw"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Password"
+                android:paddingLeft="3dp"
+                android:textColor="#3B025E"
+                android:textSize="25dp" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Interest"
-        android:textSize="18dp"
-        tools:layout_editor_absoluteX="37dp"
-        tools:layout_editor_absoluteY="524dp" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="107dp"
-        android:layout_height="37dp"
-        android:text="Button"
-        tools:layout_editor_absoluteX="37dp"
-        tools:layout_editor_absoluteY="467dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_content_roundcorner">
 
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="107dp"
-        android:layout_height="37dp"
-        android:text="Button"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="553dp" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="44dp"
+                android:layout_height="48dp"
+                app:srcCompat="@drawable/ic_user" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="187dp"
-        android:layout_height="30dp"
-        android:text="GPS 위치 정보 사용"
-        android:textSize="20dp"
-        tools:layout_editor_absoluteX="38dp"
-        tools:layout_editor_absoluteY="598dp" />
+            <EditText
+                android:id="@+id/etUser"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="5dp"
+                android:hint="Username"
+                android:paddingLeft="3dp"
+                android:textColor="#3B025E"
+                android:textSize="25dp" />
+        </LinearLayout>
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Off / On"
-        tools:layout_editor_absoluteX="254dp"
-        tools:layout_editor_absoluteY="601dp" />
+        <TextView
+            android:id="@+id/txtLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textSize="30dp" />
+
+        <EditText
+            android:id="@+id/etLo"
+            android:layout_width="377dp"
+            android:layout_height="59dp"
+            android:ems="10"
+            android:hint="도/시/동"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/btnSignup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/layout_button_roundcorner"
+            android:text="Sign Up"
+            android:textSize="25dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

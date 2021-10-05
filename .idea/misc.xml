@@ -3,10 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/FestivalApp-main/FestivalApp-main/app/src/main/res/drawable-v24/ic_lock_lightpurple.xml" value="0.3546875" />
+        <entry key="..\:/FestivalApp-main/FestivalApp-main/app/src/main/res/drawable-v24/layout_button_roundcorner.xml" value="0.3546875" />
+        <entry key="..\:/FestivalApp-main/FestivalApp-main/app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.3546875" />
+        <entry key="..\:/FestivalApp-main/FestivalApp-main/app/src/main/res/layout/activity_infopage.xml" value="0.2246376811594203" />
+        <entry key="..\:/FestivalApp-main/FestivalApp-main/app/src/main/res/layout/activity_join.xml" value="0.2246376811594203" />
+        <entry key="..\:/FestivalApp-main/FestivalApp-main/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/drawable-v24/layout_button_roundcorner.xml" value="0.34923076923076923" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/drawable/ic_user.xml" value="0.34923076923076923" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/drawable/layout_joinbackground_round.xml" value="0.3546875" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_home.xml" value="0.19202898550724637" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_infopage.xml" value="0.33" />
         <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_join.xml" value="0.33" />
         <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_mypage.xml" value="0.21195652173913043" />
-        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_review_content.xml" value="0.18645833333333334" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_review_write.xml" value="0.20516304347826086" />
       </map>
     </option>
   </component>
