@@ -22,7 +22,9 @@
         <activity android:name=".activity.MypageActivity" />
         <activity android:name=".activity.JoinActivity" />
         <activity android:name=".activity.HomeActivity" />
-        <activity android:name=".activity.LoginActivity">
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

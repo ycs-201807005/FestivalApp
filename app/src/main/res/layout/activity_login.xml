@@ -8,12 +8,13 @@
     android:paddingLeft="30dp"
     android:paddingRight="30dp">
 
-
     <LinearLayout
+        android:id="@+id/layoutLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
+
         <!-- 로그인 박스 #RelativeLayout:centerInParent -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,11 +22,21 @@
             android:background="@drawable/layout_background_roundcorner"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="LOGIN"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+
             <!-- ID 박스 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/layout_content_roundcorner"
                 android:baselineAligned="true">
 
@@ -44,6 +55,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <EditText
+                    android:id="@+id/editEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -52,7 +64,7 @@
                     android:textColorHint="#D3BFE3"
                     android:inputType="textEmailAddress"
                     android:textSize="18sp"
-                    android:textColor="#D3BFE3"/>
+                    android:textColor="#D3BFE3" />
             </LinearLayout>
 
             <!-- Password 박스 -->
@@ -91,18 +103,27 @@
             </LinearLayout>
 
             <!-- 로그인 버튼 -->
-            <Button
-                android:id="@+id/btnSignIn"
+            <LinearLayout
+                android:id="@+id/linlayoutSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
                 android:background="@drawable/layout_button_roundcorner"
-                android:backgroundTint="#FFFFFF"
-                android:text="Sign In"
-                android:textColor="#C0A5D7"
-                android:textSize="18sp"
-                app:cornerRadius="55dp" />
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tvSignIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Sign In"
+                    android:textAlignment="center"
+                    android:textColor="#C0A5D7"
+                    android:textSize="18sp"
+                    android:clickable="true"/>
+            </LinearLayout>
 
             <!-- sign up / Forgot?-->
             <LinearLayout
@@ -115,17 +136,22 @@
                     android:id="@+id/tvSignUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="ontvSignUpClicked"
                     android:text="Sign Up"
                     android:textAlignment="center"
                     android:textColor="#C0A5D7"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:id="@+id/tvForgot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
                     android:text="Forgot Password/ID?"
                     android:textAlignment="center"
                     android:textColor="#C0A5D7"
@@ -148,12 +174,10 @@
                 android:text="테스트"
                 android:textSize="40sp"
                 android:textAlignment="center">
+
             </TextView>
 
-            <Button
-                android:id="@+id/btnTest"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
         </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

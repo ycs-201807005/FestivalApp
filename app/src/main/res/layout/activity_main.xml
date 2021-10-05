@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/bookmarktestButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Bookmark Test" />
+
+    <Button
+        android:id="@+id/viewpostButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="View Posts" />
+
+    <Button
+        android:id="@+id/writepostButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Write Post" />
+
+    <Button
+        android:id="@+id/profileButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Profile" />
+
+    <Button
+        android:id="@+id/profileupdateButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Profile Update" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Logout" />
+</LinearLayout>
