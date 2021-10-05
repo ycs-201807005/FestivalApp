@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FestivalApp">
+        <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.InfopageActivity"></activity>
         <activity android:name=".activity.ReviewContentActivity" />
         <activity android:name=".activity.ReviewWriteActivity" />

@@ -1,4 +1,4 @@
-package com.example.festivalapp;
+package com.example.festivalapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.festivalapp.R;
 import com.example.festivalapp.activity.ConfigActivity;
 import com.example.festivalapp.activity.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,19 +21,6 @@ public class MainActivity extends ConfigActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(user == null) {
-            onStartActivity(LoginActivity.class);
-        }else {
-            for (UserInfo profile : user.getProviderData()) {
-                String username = profile.getDisplayName();
-                if(username == null) {
-
-                }
-            }
-        }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
         findViewById(R.id.profileupdateButton).setOnClickListener(onClickListener);

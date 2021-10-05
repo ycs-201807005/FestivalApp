@@ -1,20 +1,12 @@
 package com.example.festivalapp.activity;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.festivalapp.FirebaseFuncs;
-import com.example.festivalapp.MainActivity;
 import com.example.festivalapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends ConfigActivity {
     private FirebaseAuth mAuth;
-    //private FirebaseUser user;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +25,11 @@ public class LoginActivity extends ConfigActivity {
 
         /* 로그인 상태 확인*/
         mAuth = FirebaseAuth.getInstance();
-        //user = mAuth.getCurrentUser();
-        //if(user != null){
-            //onStartActivity(MainActivity.class); //->HomeActivity
-            //finish();
-       // }
+        user = mAuth.getCurrentUser();
+        if(user != null){
+            onStartActivity(MainActivity.class); //->HomeActivity
+            finish();
+        }
 
         findViewById(R.id.tvSignIn).setOnClickListener(onClickListener);
         findViewById(R.id.tvSignUp).setOnClickListener(onClickListener);
@@ -74,9 +66,6 @@ public class LoginActivity extends ConfigActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                mAuth = FirebaseAuth.getInstance();
-                                FirebaseUser user = mAuth.getCurrentUser();
-
                                 startToast("Login Success.");
                                 onStartActivity(MainActivity.class); //->HomeActivity
                             } else {
