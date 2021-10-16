@@ -30,6 +30,7 @@
                 android:textColor="#ffffff"
                 android:textSize="20dp"
                 android:textStyle="bold"
+                android:typeface="serif"
                 android:textAlignment="center"/>
 
             <!-- ID 박스 -->
@@ -51,7 +52,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:srcCompat="@drawable/ic_email_lightpurple" />
+                        app:srcCompat="@drawable/ic_email" />
                 </androidx.cardview.widget.CardView>
 
                 <EditText
@@ -61,10 +62,10 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:hint="ID"
-                    android:textColorHint="#D3BFE3"
+                    android:textColorHint="#FCCD8E"
                     android:inputType="textEmailAddress"
-                    android:textSize="18sp"
-                    android:textColor="#D3BFE3" />
+                    android:textSize="16sp"
+                    android:textColor="#756A57" />
             </LinearLayout>
 
             <!-- Password 박스 -->
@@ -85,7 +86,7 @@
                         android:layout_height="match_parent"
                         android:background="#FFFFFF"
                         android:backgroundTint="#FFFFFF"
-                        app:srcCompat="@drawable/ic_lock_lightpurple" />
+                        app:srcCompat="@drawable/ic_lock" />
                 </androidx.cardview.widget.CardView>
 
                 <EditText
@@ -97,33 +98,24 @@
                     android:paddingLeft="3dp"
                     android:inputType="textPassword"
                     android:hint="Password"
-                    android:textColorHint="#D3BFE3"
-                    android:textColor="#D3BFE3"
-                    android:textSize="18sp"/>
+                    android:textColorHint="#FCCD8E"
+                    android:textColor="#756A57"
+                    android:textSize="16sp"/>
             </LinearLayout>
 
             <!-- 로그인 버튼 -->
-            <LinearLayout
-                android:id="@+id/linlayoutSignIn"
+            <Button
+                android:id="@+id/btnSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
-                android:background="@drawable/layout_button_roundcorner"
-                android:clickable="true">
-
-                <TextView
-                    android:id="@+id/tvSignIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Sign In"
-                    android:textAlignment="center"
-                    android:textColor="#C0A5D7"
-                    android:textSize="18sp"
-                    android:clickable="true"/>
-            </LinearLayout>
+                android:text="Sign In"
+                android:textAllCaps="false"
+                android:textColor="#FAA244"
+                android:textSize="18sp"
+                android:typeface="serif"
+                android:background="@drawable/layout_button_roundcorner" />
 
             <!-- sign up / Forgot?-->
             <LinearLayout
@@ -131,31 +123,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp">
-
-                <TextView
-                    android:id="@+id/tvSignUp"
+                <Button
+                    android:id="@+id/btnSignUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_weight="1"
-                    android:clickable="true"
-                    android:onClick="ontvSignUpClicked"
                     android:text="Sign Up"
-                    android:textAlignment="center"
-                    android:textColor="#C0A5D7"
+                    android:textAllCaps="false"
+                    android:textColor="#FAA244"
                     android:textStyle="bold"
-                    />
+                    android:typeface="serif"
+                    android:background="#00ff0000" />
 
-                <TextView
-                    android:id="@+id/tvForgot"
+                <Button
+                    android:id="@+id/btnForgot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:clickable="true"
                     android:text="Forgot Password/ID?"
-                    android:textAlignment="center"
-                    android:textColor="#C0A5D7"
-                    android:textStyle="bold" />
+                    android:textAllCaps="false"
+                    android:textColor="#FAA244"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:background="#00ff0000" />
             </LinearLayout>
         </LinearLayout>
 

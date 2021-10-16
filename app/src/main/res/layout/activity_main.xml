@@ -7,41 +7,43 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".activity.MainActivity">
+    tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/bookmarktestButton"
-        android:layout_width="200dp"
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bookmark Test" />
-
+        android:text="Logtout" />
     <Button
-        android:id="@+id/viewpostButton"
-        android:layout_width="200dp"
+        android:id="@+id/btnMypage"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Posts" />
+        android:text="Mypage" />
 
-    <Button
-        android:id="@+id/writepostButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Write Post" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/profileButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Profile" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/profileupdateButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Profile Update" />
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentmap"
+                android:name="com.example.festivalapp.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="750dp"
+                tools:layout="@layout/fragment_map" />
 
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Logout" />
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentlist"
+                android:name="com.example.festivalapp.ListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="750dp"
+                tools:layout="@layout/fragment_list" />
+
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

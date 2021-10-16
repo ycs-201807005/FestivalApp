@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".DetailInfoActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <!--대표 이미지-->
+                    <ImageView
+                        android:id="@+id/imgvImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="270dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:background="#FBF7EB"/>
+                    <!--북마크 버튼-->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="30dp"
+                        app:cardCornerRadius="10dp">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:srcCompat="@drawable/ic_bookmark0" />
+                    </androidx.cardview.widget.CardView>
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="240dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/layout_joinbackground_round">
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
+                        android:text="Title"
+                        android:textSize="30dp"
+                        android:textAlignment="center"
+                        android:textColor="#756A57"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+                    <TextView
+                        android:id="@+id/tvOverview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Overview\nLine1\nLine2\nLine3"
+                        android:textSize="16dp"
+                        android:textColor="#756A57"
+                        android:typeface="serif" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!--Info-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:id="@+id/tvInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="7dp"
+                    android:text="Info"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="#756A57"
+                    android:typeface="serif"
+                    android:background="@drawable/layout_titile_underline"/>
+                <TextView
+                    android:id="@+id/tvInfoContents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="22dp"
+                    android:text="[ 공연시간 ]\n2017년 9월 21일(목)~9월 24일(일), 4일간 / 09:00~21:00"
+                    android:textSize="15dp"
+                    android:textColor="#756A57"
+                    android:typeface="serif"/>
+
+            </LinearLayout>
+
+            <!--Map-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:id="@+id/tvMap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="7dp"
+                    android:text="Map"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="#756A57"
+                    android:typeface="serif"
+                    android:background="@drawable/layout_titile_underline"/>
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragmentdetailmap"
+                    android:name="com.example.festivalapp.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="8dp"
+                    tools:layout="@layout/fragment_detail_info_map" />
+                <TextView
+                    android:id="@+id/tvMapContents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="22dp"
+                    android:text="MapContents1\nMapContents2\nMapContents3"
+                    android:textSize="16dp"
+                    android:textColor="#756A57"
+                    android:typeface="serif"/>
+            </LinearLayout>
+
+            <!--Reviews-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:orientation="vertical" >
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvReviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginBottom="7dp"
+                        android:text="Reviews"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:textColor="#756A57"
+                        android:typeface="serif"
+                        android:background="@drawable/layout_titile_underline"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="28dp"
+                        android:text="write→"
+                        android:textSize="16dp"
+                        android:textColor="#756A57"
+                        android:textAllCaps="false"
+                        android:typeface="serif"
+                        android:clickable="true"
+                        />
+                </FrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="22dp"
+                    overScrollMode="never"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="3dp"
+    app:cardBackgroundColor="#B3FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- 이미지 -->
+        <ImageView
+            android:id="@+id/imgvThumbnail"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:background="@color/black" />
+
+        <!-- 제목과 위치 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bmarksTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="test-title1"
+                android:textSize="20dp"
+                android:textColor="#5A048A"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:background="@drawable/layout_bmarks_leftunderline"/>
+
+            <TextView
+                android:id="@+id/bmarksevtPlace"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:text="eventplace"
+                android:textSize="15dp"
+                android:textColor="#5A048A"
+                android:background="@drawable/layout_bmarks_leftline"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

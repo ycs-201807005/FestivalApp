@@ -7,6 +7,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.festivalapp.AllFestivalInfoUpdate;
+import com.example.festivalapp.GPSActivity;
+import com.example.festivalapp.PasswordresetActivity;
 import com.example.festivalapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,17 +26,23 @@ public class LoginActivity extends ConfigActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        /* 로그인 상태 확인*/
+        /* 자동 로그인 */
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         if(user != null){
-            onStartActivity(MainActivity.class); //->HomeActivity
-            finish();
+            if(user.getEmail().equals("test@manager.com")) {
+                onStartActivity(AllFestivalInfoUpdate.class); //Firebase 전체 데이터 관리
+                finish();
+            }
+            else {
+                onStartActivity(GPSActivity.class); //사용자 현채 위치 가져오기
+                finish();
+            }
         }
 
-        findViewById(R.id.tvSignIn).setOnClickListener(onClickListener);
-        findViewById(R.id.tvSignUp).setOnClickListener(onClickListener);
-        findViewById(R.id.tvForgot).setOnClickListener(onClickListener);
+        findViewById(R.id.btnSignIn).setOnClickListener(onClickListener);
+        findViewById(R.id.btnSignUp).setOnClickListener(onClickListener);
+        findViewById(R.id.btnForgot).setOnClickListener(onClickListener);
 
     }
 
@@ -41,15 +50,16 @@ public class LoginActivity extends ConfigActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.linlayoutSignIn :
-                case R.id.tvSignIn:
+                case R.id.btnSignIn:
                     login();
                     break;
-                case R.id.tvSignUp:
-                    //myStartActivity(SignupActivity.class);
+                case R.id.btnSignUp:
+                    onStartActivity(SignupActivity.class);
+                    finish();
                     break;
-                case R.id.tvForgot:
-                    //myStartActivity(PasswordresetActivity.class);
+                case R.id.btnForgot:
+                    onStartActivity(PasswordresetActivity.class);
+                    finish();
                     break;
             }
         }
@@ -67,7 +77,16 @@ public class LoginActivity extends ConfigActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 startToast("Login Success.");
-                                onStartActivity(MainActivity.class); //->HomeActivity
+
+                                if(editEmail.equals("test@manager.com")) {
+                                    onStartActivity(AllFestivalInfoUpdate.class); //Firebase 전체 데이터 관리
+                                    finish();
+                                }
+                                else {
+                                    onStartActivity(GPSActivity.class); //사용자 현채 위치 가져오기
+                                    finish();
+                                }
+
                             } else {
                                 if (task.getException() != null) {
                                     startToast(task.getException().toString());
