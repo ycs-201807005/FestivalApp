@@ -1,24 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LoginActivity">
+    android:background="@drawable/loginbackground"
+    android:orientation="vertical"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp">
 
+        <!-- 로그인 박스 #RelativeLayout:centerInParent -->
+        <LinearLayout
+            android:id="@+id/layoutLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_background_roundcorner"
+            android:orientation="vertical"
 
-    <Button
-        android:id="@+id/btnSignIn"
-        android:layout_width="wrap_content"
+            android:layout_centerInParent="true">
+
+            <!-- ID 박스 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/layout_content_roundcorner">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/ic_email_lightpurple" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tvID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:paddingLeft="3dp"
+                    android:text="ID"
+                    android:textColor="#D3BFE3"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <!-- Password 박스 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layout_content_roundcorner">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/ic_lock_lightpurple" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tvPW"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:paddingLeft="3dp"
+                    android:text="PW"
+                    android:textColor="#D3BFE3"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <!-- 로그인 버튼 -->
+            <Button
+                android:id="@+id/btnSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/layout_button_roundcorner"
+                android:text="Sign In"
+                android:textSize="18sp"
+                app:cornerRadius="55dp" />
+
+            <!-- sign up / Forgot?-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/tvSignUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sign Up"
+                    android:textAlignment="center"
+                    android:textColor="#C0A5D7"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvForgot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Forgot Password/ID?"
+                    android:textAlignment="center"
+                    android:textColor="#C0A5D7"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutTest"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="SignIn" />
+        android:layout_below="@id/layoutLogin"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        android:background="@drawable/layout_background_roundcorner_30">
 
-    <Button
-        android:id="@+id/btnSignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="SignUp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTest"
+            android:text="테스트"
+            android:textSize="40sp"
+            android:textAlignment="center">
 
-</LinearLayout>
+        </TextView>
+
+    </LinearLayout>
+</RelativeLayout>

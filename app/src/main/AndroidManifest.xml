@@ -28,10 +28,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 카카오맵 키 -->
+        </activity>
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="e06de8b2e101c412ac153c6d1854a177" />
+            android:value="e06de8b2e101c412ac153c6d1854a177" /><!-- 카카오맵 키 -->
     </application>
 
 </manifest>

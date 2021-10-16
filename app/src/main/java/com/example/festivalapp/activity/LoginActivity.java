@@ -45,6 +45,7 @@ public class LoginActivity extends ConfigActivity {
                 }
             }
         });
+        /*
         //회원가입 버튼 클릭
         btnSignUp = (Button)findViewById(R.id.btnSignUp);
         btnSignUp.setOnClickListener(new Button.OnClickListener() {
@@ -52,7 +53,7 @@ public class LoginActivity extends ConfigActivity {
             public void onClick(View view) {
                 onStartActivity(JoinActivity.class);
             }
-        });
+        });*/
     }
 
 }
