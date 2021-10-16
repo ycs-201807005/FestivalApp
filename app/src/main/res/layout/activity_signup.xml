@@ -10,12 +10,12 @@
 
     <!-- SIGN UP -->
     <TextView
-        android:id="@+id/tvName"
-        android:layout_width="match_parent"
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
-        android:textAlignment="center"
-        android:text="Username"
+        android:layout_marginLeft="25dp"
+        android:text="Sign up"
         android:textColor="#f2ffffff"
         android:textSize="36dp"
         android:textStyle="bold"
@@ -33,6 +33,7 @@
 
         <!--이메일-->
         <TextView
+            android:id="@+id/tvEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -42,21 +43,22 @@
             android:textSize="20dp"
             android:textStyle="bold"
             android:typeface="serif" />
-        <TextView
-            android:id="@+id/tvEmail"
+        <EditText
+            android:id="@+id/editEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="15dp"
-            android:text="Email"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
             android:paddingLeft="3dp"
-            android:textColor="#A6A6A6"
+            android:textColor="#3B025E"
             android:textSize="18dp"
-            android:typeface="serif"
             android:background="@drawable/layout_text_underline" />
 
         <!--비밀번호-->
         <TextView
+            android:id="@+id/tvPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -66,91 +68,81 @@
             android:textSize="20dp"
             android:textStyle="bold"
             android:typeface="serif" />
-        <Button
-            android:id="@+id/btnPwdreset"
+        <EditText
+            android:id="@+id/editPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="15dp"
-            android:text="Password reset →"
-            android:textColor="#A6A6A6"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="3dp"
+            android:textColor="#3B025E"
             android:textSize="18dp"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:typeface="serif"
-            android:stateListAnimator="@null"
+            android:background="@drawable/layout_text_underline"/>
+
+        <!--비밀번호 확인-->
+        <TextView
+            android:id="@+id/tvPwdCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="3dp"
+            android:text="Password Check"
+            android:textColor="#756A57"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+        <EditText
+            android:id="@+id/editPwdCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="15dp"
+            android:hint="Password check"
+            android:inputType="textPassword"
+            android:paddingLeft="3dp"
+            android:textColor="#3B025E"
+            android:textSize="18dp"
+            android:background="@drawable/layout_text_underline"/>
+
+        <!--이름-->
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="3dp"
+            android:text="Name"
+            android:textColor="#756A57"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+        <EditText
+            android:id="@+id/editName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="15dp"
+            android:hint="Username"
+            android:inputType="text"
+            android:paddingLeft="3dp"
+            android:textColor="#3B025E"
+            android:textSize="18dp"
             android:background="@drawable/layout_text_underline"/>
 
         <Button
-            android:id="@+id/btnLogout"
+            android:id="@+id/btnSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="75dp"
-            android:layout_marginVertical="5dp"
-            android:background="#00ff0000"
-            android:text="Logout"
+            android:background="@drawable/layout_orangebutton_roundcorner"
+            android:text="Sign Up"
             android:textAllCaps="false"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:typeface="serif"
-            android:textColor="#FAA244"
-            android:stateListAnimator="@null" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="80dp"
-            android:layout_marginVertical="5dp"
-            android:text="........"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:typeface="serif"
-            android:textColor="#756A57"
-            android:textAlignment="center"/>
-
-        <Button
-            android:id="@+id/btnBookmarks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="75dp"
-            android:layout_marginVertical="5dp"
-            android:background="#00ff0000"
-            android:text="BookMarks"
-            android:textAllCaps="false"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:typeface="serif"
-            android:textColor="#756A57"
-            android:stateListAnimator="@null" />
-        <Button
-            android:id="@+id/btnReviews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="75dp"
-            android:layout_marginVertical="5dp"
-            android:background="#00ff0000"
-            android:text="Reviews"
-            android:textAllCaps="false"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:typeface="serif"
-            android:textColor="#756A57"
-            android:stateListAnimator="@null" />
-        <Button
-            android:id="@+id/btnUserDelete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="75dp"
-            android:layout_marginVertical="5dp"
-            android:background="#00ff0000"
-            android:text="Delete"
-            android:textAllCaps="false"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:typeface="serif"
-            android:textColor="#756A57"
-            android:stateListAnimator="@null" />
-
+            android:textColor="#ffffff" />
 
     </LinearLayout>
 

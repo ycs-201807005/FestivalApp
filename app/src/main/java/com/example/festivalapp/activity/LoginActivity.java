@@ -1,59 +1,107 @@
 package com.example.festivalapp.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import com.example.festivalapp.FirebaseFuncs;
+import androidx.annotation.NonNull;
+
+import com.example.festivalapp.AllFestivalInfoUpdate;
+import com.example.festivalapp.GPSActivity;
+import com.example.festivalapp.PasswordresetActivity;
 import com.example.festivalapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends ConfigActivity {
-    private Button btnSignIn, btnSignUp;
-    private String id,pwd;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        /* 추가 - 자동 로그인 기능 */
-        boolean login = false;
-        if(login){
-            onStartActivity(HomeActivity.class);
-            finish();
+        /* 자동 로그인 */
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        if(user != null){
+            if(user.getEmail().equals("test@manager.com")) {
+                onStartActivity(AllFestivalInfoUpdate.class); //Firebase 전체 데이터 관리
+                finish();
+            }
+            else {
+                onStartActivity(GPSActivity.class); //사용자 현채 위치 가져오기
+                finish();
+            }
         }
 
-        /* 버튼 클릭 이벤트 */
-        //로그인 버튼 클릭
-        btnSignIn = (Button)findViewById(R.id.btnSignIn);
-        btnSignIn.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //1. 입력 여부 확인
-                id="test";
-                pwd="1234";
-                //2. Firebase 회원 확인 -@ ID/Pwd 전달!
-                FirebaseFuncs firebaseFuncs = new FirebaseFuncs();
-                boolean isMember = firebaseFuncs.isMember(id, pwd);
-                if(isMember){
-                    onStartActivity(HomeActivity.class);
+        findViewById(R.id.btnSignIn).setOnClickListener(onClickListener);
+        findViewById(R.id.btnSignUp).setOnClickListener(onClickListener);
+        findViewById(R.id.btnForgot).setOnClickListener(onClickListener);
+
+    }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btnSignIn:
+                    login();
+                    break;
+                case R.id.btnSignUp:
+                    onStartActivity(SignupActivity.class);
                     finish();
-                }
-                else{
-                    //"존재하지 않는 회원입니다."
-                }
+                    break;
+                case R.id.btnForgot:
+                    onStartActivity(PasswordresetActivity.class);
+                    finish();
+                    break;
             }
-        });
-        /*
-        //회원가입 버튼 클릭
-        btnSignUp = (Button)findViewById(R.id.btnSignUp);
-        btnSignUp.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onStartActivity(JoinActivity.class);
-            }
-        });*/
+        }
+    };
+
+    /* 로그인 */
+    private void login() {
+        String editEmail = ((EditText) findViewById(R.id.editEmail)).getText().toString();
+        String editPW = ((EditText) findViewById(R.id.editPW)).getText().toString();
+
+        if (editEmail.length() > 0 && editPW.length() > 0) {
+            mAuth.signInWithEmailAndPassword(editEmail, editPW)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                startToast("Login Success.");
+
+                                if(editEmail.equals("test@manager.com")) {
+                                    onStartActivity(AllFestivalInfoUpdate.class); //Firebase 전체 데이터 관리
+                                    finish();
+                                }
+                                else {
+                                    onStartActivity(GPSActivity.class); //사용자 현채 위치 가져오기
+                                    finish();
+                                }
+
+                            } else {
+                                if (task.getException() != null) {
+                                    startToast(task.getException().toString());
+                                }
+                            }
+                        }
+                    });
+        }else {
+            startToast("Check Email or Password.");
+        }
+    }
+
+    /* Toast Message*/
+    private void startToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
 }
