@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/beigebackground"
-    android:orientation="vertical"
-    tools:context=".ReviewListActivity">
-
+    android:background="#000000"
+    tools:context=".ListFragment">
+5
+    <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerReviews"
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="10dp"/>
+        android:layout_marginTop="5dp"
+        overScrollMode="never"/>
 
 </LinearLayout>

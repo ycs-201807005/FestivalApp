@@ -26,7 +26,7 @@ public class ReviewContentActivity extends ConfigActivity {
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onStartActivity(InfopageActivity.class);
+                //onStartActivity(InfopageActivity.class);
             }
         });
     }

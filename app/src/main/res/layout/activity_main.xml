@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logtout" />
+    <Button
+        android:id="@+id/btnMypage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mypage" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentmap"
+                android:name="com.example.festivalapp.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="750dp"
+                tools:layout="@layout/fragment_map" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentlist"
+                android:name="com.example.festivalapp.ListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="750dp"
+                tools:layout="@layout/fragment_list" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

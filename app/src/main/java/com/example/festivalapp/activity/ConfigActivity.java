@@ -3,8 +3,11 @@ package com.example.festivalapp.activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class ConfigActivity extends AppCompatActivity {
 
@@ -21,4 +24,9 @@ public class ConfigActivity extends AppCompatActivity {
         //intent.putExtra("contentid",contentid);
         startActivity(intent);
     }
+
+    protected void Toastmsg(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
 }

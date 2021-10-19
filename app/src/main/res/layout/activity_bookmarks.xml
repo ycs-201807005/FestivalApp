@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/beigebackground"
     android:orientation="vertical"
-    tools:context=".ReviewListActivity">
+    android:background="@drawable/lightorangebackground"
+    tools:context=".BookmarksActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerReviews"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="10dp"/>
+        android:layout_marginHorizontal="10dp"
+        android:id="@+id/recyclerBmarks"/>
 
 </LinearLayout>

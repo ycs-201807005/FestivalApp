@@ -6,4 +6,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">api.visitkorea.or.kr</domain>
     </domain-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">tong.visitkorea.or.kr</domain>
+    </domain-config>
 </network-security-config>

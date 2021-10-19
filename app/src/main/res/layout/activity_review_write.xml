@@ -8,65 +8,47 @@
     tools:context=".activity.ReviewWriteActivity">
 
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="리뷰제목" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="172dp"
+        android:text="축제에 대한 솔직한 후기를 남겨주세요" />
+
+    <Button
+        android:id="@+id/btnRvInsert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="리뷰 등록" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="리뷰제목"
-            android:textAlignment="center"
-            android:textSize="50dp" />
-
-        <RatingBar
-            android:id="@+id/ratingBar"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:max="5"
-            android:numStars="5"
-            android:rating="4"
-            android:stepSize="0.5" />
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="172dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/teal_200"
-            android:text="축제에 대한 솔직한 후기를 남겨주세요" />
-
-        <Button
-            android:id="@+id/btnRvInsert"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="리뷰 등록" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@android:drawable/ic_menu_gallery" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@android:drawable/ic_menu_gallery" />
-
-        </LinearLayout>
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
     </LinearLayout>
 
 </LinearLayout>
