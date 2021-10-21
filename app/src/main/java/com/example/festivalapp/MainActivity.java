@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentContainerView;
@@ -39,6 +41,9 @@ public class MainActivity extends ConfigActivity {
     private ArrayList<String> contentIdList;
     private double latY; //사용자 위치 : y좌표 = 위도 = longitude
     private double longX; //사용자 위치 : x좌표 = 경도 = latitude
+
+    private final int gallery_image = 200;
+    private ImageView imageview;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +93,17 @@ public class MainActivity extends ConfigActivity {
         fragmentTransaction.commit();
         Log.e("실행", "MainActivity:commit()");
 
+//      이미지 갤러리 연결
+        imageview = (ImageView)findViewById(R.id.imageView);
+        imageview.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, gallery_image);
+            }
+        });
+
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -127,5 +143,16 @@ public class MainActivity extends ConfigActivity {
         Log.e("실행", "MainActivity:add()");
         fragmentTransaction.commitAllowingStateLoss();
         Log.e("실행", "MainActivity:commit()");
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == gallery_image && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            Uri selectedImageUri = data.getData();
+            imageview.setImageURI(selectedImageUri);
+
+        }
+
     }
 }
