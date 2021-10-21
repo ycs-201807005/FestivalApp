@@ -59,7 +59,7 @@ public class SignupActivity extends ConfigActivity {
                                     /* 사용자 정보 추가 - Firestore */
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                    Memberinfo memberinfo = new Memberinfo(name, 37.566741959771605, 126.97787155945724, "서울특별시 중구 명동 세종대로 110 : 서울특별시청");
+                                    Memberinfo memberinfo = new Memberinfo(name, 37.566741959771605, 126.97787155945724, "서울특별시 중구 명동 세종대로 110 : 서울특별시청", email);
                                     if(user != null) {
                                         db.collection("users").document(user.getUid()).set(memberinfo)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
