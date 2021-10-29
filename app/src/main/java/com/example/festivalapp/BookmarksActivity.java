@@ -91,6 +91,7 @@ public class BookmarksActivity extends AppCompatActivity {
             String eventplace = "eventplace " + i + "-" + i;
             MarkerInfo markerInfo = new MarkerInfo(contentId, title, eventplace);
             bmarksList.add(markerInfo);
+
         }*/
     }
     private void myStartActivity(Class c) {

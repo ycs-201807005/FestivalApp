@@ -40,6 +40,7 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder> 
         public ViewHolder(CardView v) {
             super(v);
             cardView = v;
+
         }
     }
 

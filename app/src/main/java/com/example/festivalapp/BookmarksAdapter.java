@@ -39,6 +39,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
             @Override
             public void onClick(View v) {
 
+
             }
         });
 

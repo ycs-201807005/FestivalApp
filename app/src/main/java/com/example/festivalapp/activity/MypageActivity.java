@@ -34,7 +34,7 @@ public class MypageActivity extends ConfigActivity {
         findViewById(R.id.btnBookmarks).setOnClickListener(onClickListener);
         findViewById(R.id.btnReviews).setOnClickListener(onClickListener);
 
-        //회원정보 출력
+        //회원정보 출력!
         tvName = (TextView) findViewById(R.id.tvName);
         tvEmail = (TextView) findViewById(R.id.tvEmail);
 

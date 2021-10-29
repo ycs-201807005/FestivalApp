@@ -34,4 +34,5 @@ public class MarkerInfo {
     public void setEventplace(String eventplace) {
         this.eventplace = eventplace;
     }
+
 }
