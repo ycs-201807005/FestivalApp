@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_info">
+
+        <item
+            android:id="@+id/menu_username"
+            android:title="사용자_이름">
+            <menu>
+                <item
+                    android:id="@+id/menu_mypage"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="회원 정보"
+                    />
+                <item
+                    android:id="@+id/menu_bookmarks"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="북마크"
+                    />
+                <item
+                    android:id="@+id/menu_reviews"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="리뷰"
+                    />
+                <item
+                    android:id="@+id/menu_logout"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="로그아웃"
+                    />
+            </menu>
+        </item>
+    </group>
+</menu>

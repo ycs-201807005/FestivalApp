@@ -5,6 +5,8 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,8 +17,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.example.festivalapp.activity.LoginActivity;
+import com.example.festivalapp.activity.MypageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -25,6 +30,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class DetailInfoActivity extends AppCompatActivity {
     private static final String TAG = "DetailInfoActivity";
+
+    private ImageButton btnBook;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -52,6 +59,8 @@ public class DetailInfoActivity extends AppCompatActivity {
         TextView tvOverview = (TextView)findViewById(R.id.tvOverview);
         TextView tvInfoContents = (TextView)findViewById(R.id.tvInfoContents);
         TextView tvMapContents = (TextView)findViewById(R.id.tvMapContents);
+        btnBook = (ImageButton)findViewById(R.id.btnBook); //북마크 버튼
+        btnBook.setOnClickListener(onClickListener);
 
         /* contentid 문서 가져오기 */
         Query query = eventsReference.whereEqualTo("contentid", contentid);
@@ -129,6 +138,20 @@ public class DetailInfoActivity extends AppCompatActivity {
             }
         });
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btnBook:
+                    //북마크 여부 확인
+                    //북마크 여부 표시 : 이미지 변경
+                    //파베에 북마크 정보 추가
+                    //파베에 북마크 정보 삭제
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onPause() {

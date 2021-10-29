@@ -1,49 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start" >
 
-    <Button
-        android:id="@+id/btnLogout"
+    <!-- toolbar -->
+    <include layout="@layout/activity_toolbar" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logtout" />
-    <Button
-        android:id="@+id/btnMypage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mypage" />
+        android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <!--임시버튼
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="Logtout" />
+        <Button
+            android:id="@+id/btnMypage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mypage" />-->
 
-        <LinearLayout
+        <!-- 축제 지도 및 목록 -->
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragmentmap"
-                android:name="com.example.festivalapp.MapFragment"
+            android:layout_marginTop="60dp">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="750dp"
-                tools:layout="@layout/fragment_map" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragmentmap"
+                    android:name="com.example.festivalapp.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="750dp"
+                    tools:layout="@layout/fragment_map" />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragmentlist"
-                android:name="com.example.festivalapp.ListFragment"
-                android:layout_width="match_parent"
-                android:layout_height="750dp"
-                tools:layout="@layout/fragment_list" />
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/fragmentlist"
+                    android:name="com.example.festivalapp.ListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="750dp"
+                    tools:layout="@layout/fragment_list" />
+            </LinearLayout>
+        </ScrollView>
 
-        </LinearLayout>
+    </LinearLayout>
 
-    </ScrollView>
-</LinearLayout>
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/drawer_nav_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_nav_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
