@@ -17,7 +17,16 @@
         <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_join.xml" value="0.33" />
         <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_mypage.xml" value="0.21195652173913043" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_review_content.xml" value="0.21693840579710144" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_review_list.xml" value="0.21693840579710144" />
         <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_review_write.xml" value="0.20516304347826086" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_signup.xml" value="0.213768115942029" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/activity_wait.xml" value="0.213768115942029" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/bmarks_holder_view.xml" value="0.213768115942029" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/fragment_detail_info_map.xml" value="0.21693840579710144" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/fragment_list.xml" value="0.213768115942029" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/recyclerview_markerinfo_item.xml" value="0.21693840579710144" />
+        <entry key="..\:/team/FestivalApp/app/src/main/res/layout/reviews_holder_view.xml" value="0.21693840579710144" />
       </map>
     </option>
   </component>
