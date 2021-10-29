@@ -5,12 +5,14 @@ public class Memberinfo {
     private double mapx;
     private double mapy;
     private String address;
+    private String email;
 
-    public Memberinfo(String name, double mapx, double mapy, String address) {
+    public Memberinfo(String name, double mapx, double mapy, String address, String email) {
         this.name = name;
         this.mapx = mapx;
         this.mapy = mapy;
         this.address = address;
+        this.email = email;
     }
 
     public String getName() {
@@ -44,4 +46,13 @@ public class Memberinfo {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
 }

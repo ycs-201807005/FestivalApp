@@ -57,6 +57,7 @@ public class ListFragment extends Fragment {
             Log.e(TAG, "bundle!=null");
             contentIdList = bundle.getStringArrayList("contentIdList");
             Log.e(TAG, "contentIdList.size()=" + contentIdList.size());
+
         }
 
 
