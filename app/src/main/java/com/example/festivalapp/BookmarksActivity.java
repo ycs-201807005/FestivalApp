@@ -62,11 +62,6 @@ public class BookmarksActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 ArrayList<MarkerInfo> bookmarkList = new ArrayList<>();
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    bookmarkList.add(new MarkerInfo(
-                                            document.get("firstimage").toString(),
-                                            document.getData().get("title").toString(),
-                                            document.getData().get("contentid").toString(),
-                                            document.getData().get("eventplace").toString()));
 
                                     String contentId = document.getData().get("contentid").toString();
                                     String image = document.getData().get("firstimage").toString();
