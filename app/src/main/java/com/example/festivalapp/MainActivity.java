@@ -1,8 +1,10 @@
 package com.example.festivalapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -21,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,6 +40,8 @@ import com.example.festivalapp.R;
 import com.example.festivalapp.activity.ConfigActivity;
 import com.example.festivalapp.activity.LoginActivity;
 import com.example.festivalapp.activity.MypageActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -130,12 +135,37 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
                 //if(변경 가능)
                 //위치를 변경하시겠습니까? Yes/No
                 //ContentIdListActivity 부터 다시 불러오기
+
+                //입력 주소로 좌표 구함
                 Location location = findGeoPoint(getApplicationContext(), query);
                 Log.e(TAG,"("+ location.getLatitude() + "," + location.getLongitude() + ")");
+                //주소 구함
+                List<Address> address=null;
+                String addr;
+                Geocoder g = new Geocoder(getApplicationContext());
+                try {
+                    address = g.getFromLocation(location.getLatitude(),location.getLongitude(),10); //(y,x)
+                    addr = address.get(0).getAddressLine(0);
+                    Log.e(TAG, "[현재위치] 주소 = " + addr);
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("현재 위치 정보");
+                    builder.setMessage("현재 위치가 설정됩니다.\n현재 주소 : " + addr);
+                    builder.setCancelable(true);
+                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            Log.e(TAG,"showDialogForLocationSave() - 확인");
+                            /* 현재 사용자 위치 저장 */
+                            saveLocation(location.getLatitude(), location.getLongitude(), addr);
+                        }
+                    });
+                    builder.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
-
             // 검색 입력값 변경 시 호출
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -163,8 +193,8 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
         //Bundle
         bundle = new Bundle();
         contentIdList = getIntent().getStringArrayListExtra("contentIdList");
-        longX = getIntent().getDoubleExtra("longX",37.56667092127576);
-        latY = getIntent().getDoubleExtra("latY",126.97804107475767);
+        longX = getIntent().getDoubleExtra("longX",longX);
+        latY = getIntent().getDoubleExtra("latY",latY);
         bundle.putStringArrayList("contentIdList",contentIdList);
         Log.e("실행", "MainActivity:bundle-putStringArrayList()-" + contentIdList.size());
         bundle.putDouble("longX",longX);
@@ -207,7 +237,7 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
         Log.e("실행", "MainActivity:commit()");
     }
 
-    // Toolbar
+    /* Toolbar - 사이드메뉴 */
     public void setToolbar() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -242,10 +272,16 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
                 onStartActivity(MypageActivity.class);
                 break;
             case R.id.menu_bookmarks:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                //지도 지우기
+                clearMap();
+                //북마크 목록으로 이동
+                onStartActivity(BookmarksActivity.class);
                 break;
             case R.id.menu_reviews:
-                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_LONG).show();
+                //지도 지우기
+                clearMap();
+                //리뷰 목록으로 이동
+                onStartActivity(ReviewListActivity.class);
                 break;
             case R.id.menu_logout:
                 FirebaseAuth.getInstance().signOut();
@@ -265,11 +301,11 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    /* 주소 -> 좌표 */
     public static Location findGeoPoint(Context mcontext, String address) {
         Location loc = new Location("");
         Geocoder coder = new Geocoder(mcontext);
-        List<Address> addr = null;// 한좌표에 대해 두개이상의 이름이 존재할수있기에 주소배열을 리턴받기 위해 설정
-
+        List<Address> addr = null;// 한좌표에 대해 두개이상의 이름이 존재할수있기에 주소배열을 리턴받기 위해 설
         try {
             addr = coder.getFromLocationName(address, 5);
         } catch (IOException e) {
@@ -286,6 +322,62 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
             }
         }
         return loc;
+    }
+
+    /* 사용자 현재 위치 정보 Firebase에 저장 */
+    private void  saveLocation(double longitude, double latitude, String addr){
+        /* Firebase : Firestore */
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance(); //FirebaseFirestore
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); //FirebaseUser
+        Log.e(TAG,"user ="+user.getUid());
+        try {
+            firestore.collection("users").document(user.getUid()).update("mapx",longitude) //-경도 -x좌표 :126
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.e(TAG,"Location:mapx Update Success.-" + longitude);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG,"Location:mapx Update Fail.");
+                        }
+                    });
+            firestore.collection("users").document(user.getUid()).update("mapy",latitude) //-위도 -y좌표 :37
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.e(TAG,"Location:mapy Update Success.-"+latitude);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG,"Location:mapy Update Fail.");
+                        }
+                    });
+            firestore.collection("users").document(user.getUid()).update("address",addr)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.e(TAG,"Location:address Update Success.-"+addr);
+                            Toastmsg("위치가 저장되었습니다.");
+                            finish();
+                            onStartActivity(ContentIdListActivity.class);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG,"Location:address Update Fail.");
+                        }
+                    });
+        }
+        catch (Exception e){
+            Toastmsg("위치 저장 실패");
+
+        }
     }
 
 }

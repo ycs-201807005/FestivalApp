@@ -4,15 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--
-    <ImageButton
-        android:id="@+id/action_bar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/ic_baseline_person_24" />
--->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,7 +14,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:titleTextColor="#434343"
-            android:background="#EB878787">
+            android:background="#FCCD8E">
             <!--android:background="@android:color/transparent" 툴바 투명화-->
         </androidx.appcompat.widget.Toolbar>
     </LinearLayout>

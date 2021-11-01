@@ -3,7 +3,9 @@ package com.example.festivalapp;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -94,8 +96,8 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
             Log.e("실행", "MapFragment:addView()");
 
             // 커스텀 말풍선 등록
-            mapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
-            Log.e("실행", "MapFragment:setCalloutBalloonAdapter()");
+            //mapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
+            //Log.e("실행", "MapFragment:setCalloutBalloonAdapter()");
             //MapView-Marker Event 감지
             mapView.setPOIItemEventListener(this);
             Log.e("실행", "MapFragment:setPOIItemEventListener()");
@@ -174,29 +176,61 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
 
     @Override
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
+        //사용자가 MapView 에 등록된 POIItem 아이콘(마커)를 터치한 경우 호출
+        ArrayList<String> redundancies = new ArrayList<String>(); //중복 리스트
+
+        /*마커 중복 검사*/
+        //클릭된 마커의 좌표 비교 : contentid -> mapx, mapy
+        MapPoint callmapPoint = mapPOIItem.getMapPoint(); //선택된 마커 포인트
+        double callLat = callmapPoint.getMapPointGeoCoord().latitude; //선택된 마커 latitude-위도 -y좌표 :37
+        double callLong = callmapPoint.getMapPointGeoCoord().longitude; //선택된 마커 longitude-경도 -x좌표 :126
+        Log.e("실행", "callLat-위도 -y좌표 :37=" + callLat);
+        Log.e("실행", "callLong-경도 -x좌표 :126=" + callLong);
+
+        //존재하는 marker 중에서 같은 좌표가 있는 경우
+        for (int m = 0; m < mapPOIItems.size(); m++) {
+            MapPoint mapPoint = mapPOIItems.get(m).getMapPoint();
+            double y = mapPoint.getMapPointGeoCoord().latitude;
+            double x = mapPoint.getMapPointGeoCoord().longitude;
+            Log.e("실행", "callLat-위도 -y좌표 :37=" + y);
+            Log.e("실행", "callLong-경도 -x좌표 :126=" + x);
+
+            if (callLat == y && callLong == x) {
+                redundancies.add(String.valueOf(mapPOIItems.get(m).getTag()));
+            }
+        }
+        Log.e("실행", String.valueOf(redundancies.size()));
+
+        if (redundancies.size() > 1) {
+            //RecyclerDialog출력 - redundancies 전달!
+            showAlertDialogMarkers(redundancies);
+        } else {
+            String contentid = "" + mapPOIItem.getTag();
+            Log.e("실행", "contentid=" + contentid);
+            showAlertDialogFestival(contentid);
+        }
+    }
+
+    /* 위치 중복 축제 목록 Dialog*/
+    private void showAlertDialogMarkers(ArrayList<String> redundancies) {
+        MarkersDialogFragment dialog = new MarkersDialogFragment();
+        Bundle args = new Bundle();
+        args.putStringArrayList("redundancies",redundancies);
+        dialog.setArguments(args); // 데이터 전달
+        dialog.show(getActivity().getSupportFragmentManager(),"tag");
+    }
+
+    /*선택 축제 정보 Dialog*/
+    private void showAlertDialogFestival(String contentid) {
+        FestivalDialogFragment dialog = new FestivalDialogFragment(mContext);
+        Bundle args = new Bundle();
+        args.putString("contentid",contentid);
+        dialog.setArguments(args); // 데이터 전달
+        dialog.show(getActivity().getSupportFragmentManager(),"tag");
     }
 
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
-        /* 말풍선 클릭 시 */
-        Log.e("실행", "MapFragment:onCalloutBalloonOfPOIItemTouched()");
-        Log.e("실행", "Clicked " + mapPOIItem.getItemName() + " Callout Balloon");
-        Log.e("실행", "MapFragment: contentid = " + mapPOIItem.getTag()); // =contentid
-
-        // 상세페이지로 contentid 넘겨주기
-        String contentid = ""+mapPOIItem.getTag();
-
-        //지도 지우기
-        mainActivity.clearMap();
-
-        onStartActivity(contentid);
-
-        /*
-        cursor.close();
-        Log.e("실행", "MapFragment:onCalloutBalloonOfPOIItemTouched() - cursor.close() ");
-        db.close();
-        Log.e("실행", "MapFragment:onCalloutBalloonOfPOIItemTouched() - db.close() ");
-        */
     }
 
     @Override
@@ -214,89 +248,4 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
         startActivity(intent);//실행
     }
 
-    /* custom 말풍선 Class*/
-    class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter {
-        //private RecyclerView dialogRecyclerView; // RecyclerView
-        ArrayList<String> redundancies = new ArrayList<String>(); //중복 리스트
-
-        private final View mCalloutBalloon;
-        private int position;
-
-        public CustomCalloutBalloonAdapter() {
-            mCalloutBalloon = getLayoutInflater().inflate(R.layout.custom_callout_balloon, null);
-        }
-
-        @Override
-        public View getCalloutBalloon(MapPOIItem mapPOIItem) {
-            //마커 클릭 시 표시할 뷰 (말풍선)
-            Log.e("실행", "CustomCalloutBalloonAdapter:getCalloutBalloon()");
-            redundancies.clear();
-
-            /*마커 중복 검사*/
-            //클릭된 마커의 좌표 비교 : contentid -> mapx, mapy
-            MapPoint callmapPoint = mapPOIItem.getMapPoint(); //선택된 마커 포인트
-            double callLat = callmapPoint.getMapPointGeoCoord().latitude; //선택된 마커 latitude-위도 -y좌표 :37
-            double callLong = callmapPoint.getMapPointGeoCoord().longitude; //선택된 마커 longitude-경도 -x좌표 :126
-            Log.e("실행", "callLat-위도 -y좌표 :37=" + callLat);
-            Log.e("실행", "callLong-경도 -x좌표 :126=" + callLong);
-
-            //존재하는 marker 중에서 같은 좌표가 있는 경우
-            for (int m = 0; m < mapPOIItems.size(); m++) {
-                MapPoint mapPoint = mapPOIItems.get(m).getMapPoint();
-                double y = mapPoint.getMapPointGeoCoord().latitude;
-                double x = mapPoint.getMapPointGeoCoord().longitude;
-                Log.e("실행", "callLat-위도 -y좌표 :37=" + y);
-                Log.e("실행", "callLong-경도 -x좌표 :126=" + x);
-
-                if (callLat == y && callLong == x) {
-                    redundancies.add(String.valueOf(mapPOIItems.get(m).getTag()));
-                }
-            }
-
-
-            Log.e("실행", String.valueOf(redundancies.size()));
-
-            if (redundancies.size() > 1) {
-                //RecyclerDialog출력 - redundancies 전달!
-                showAlertDialogMarkers();
-                return null;
-            } else {
-                String contentid = "" + mapPOIItem.getTag();
-                Log.e("실행", "contentid=" + contentid);
-
-                //말풍선 생성
-                ((ImageView) mCalloutBalloon.findViewById(R.id.badge)).setImageResource(R.drawable.ic_launcher);
-                ((TextView) mCalloutBalloon.findViewById(R.id.title)).setText(mapPOIItem.getItemName());
-                eventsReference.whereEqualTo("contentid", contentid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                ((TextView) mCalloutBalloon.findViewById(R.id.desc)).setText(document.getString("eventplace")); //=eventplace
-                            }
-                        } else {
-                            //contentid에 해당하는 축제가 없음
-                        }
-                    }
-                });
-                return mCalloutBalloon;
-            }
-        }
-
-        @Override
-        public View getPressedCalloutBalloon(MapPOIItem poiItem) {
-            Log.e("실행", "CustomCalloutBalloonAdapter:getPressedCalloutBalloon()");
-            return null;
-        }
-
-        /*Dialog*/
-        private void showAlertDialogMarkers() {
-            MarkersDialogFragment dialog = new MarkersDialogFragment();
-            Bundle args = new Bundle();
-            args.putStringArrayList("redundancies",redundancies);
-            dialog.setArguments(args); // 데이터 전달
-
-            dialog.show(getActivity().getSupportFragmentManager(),"tag");
-        }
-    }
 }

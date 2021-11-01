@@ -3,15 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    tools:context=".ListFragment">
-5
-    <!-- TODO: Update blank fragment layout -->
+    android:background="@drawable/beigebackground"
+    tools:context=".ListFragment"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/layout_orange_topround15"
+        android:paddingLeft="20dp"
+        android:paddingBottom="20dp"
+        android:text="▼ 진행 중인 주변 축제"
+        android:textSize="23dp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:typeface="monospace"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
         overScrollMode="never"/>
 
 </LinearLayout>

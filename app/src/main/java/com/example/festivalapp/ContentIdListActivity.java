@@ -107,8 +107,8 @@ public class ContentIdListActivity extends ConfigActivity {
                         latY = document.getDouble("mapy");
                         Log.e(TAG, "longX: "+longX);
                         Log.e(TAG, "latY: "+latY);
-                        longX = 126.82152954401921; //longitude-경도 -x좌표 :126
-                        latY = 37.487340091293575; //latitude-위도 -y좌표 :37
+                        //longX = 126.82152954401921; //longitude-경도 -x좌표 :126
+                        //latY = 37.487340091293575; //latitude-위도 -y좌표 :37
 
                         /* 위치기반 조회 */
                         getJSON();
@@ -245,8 +245,8 @@ public class ContentIdListActivity extends ConfigActivity {
         intent.putExtra("contentIdList",contentIdList);
         //intent.putExtra("longX",longX);
         //intent.putExtra("latY",latY);
-        intent.putExtra("longX",126.82152954401921);
-        intent.putExtra("latY",37.487340091293575 );
+        intent.putExtra("longX",longX);
+        intent.putExtra("latY",latY );
         startActivity(intent);//실행
         finish();
     }

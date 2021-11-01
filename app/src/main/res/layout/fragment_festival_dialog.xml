@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="#FBF7EB" >
+    app:cardCornerRadius="15dp"
+    tools:context=".FestivalDialogFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
         android:background="#F2F2F2">
-
         <ImageView
             android:id="@+id/imgvImage"
             android:layout_width="match_parent"
@@ -22,10 +23,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
+            android:layout_marginTop="200dp"
             android:paddingHorizontal="15dp"
             android:orientation="vertical"
-            android:background="@drawable/layout_joinbackground_round15" >
-
+            android:background="@drawable/layout_joinbackground_round" >
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
@@ -36,7 +37,6 @@
                 android:textColor="#756A57"
                 android:textStyle="bold"
                 android:typeface="serif"/>
-
             <TextView
                 android:id="@+id/tvEventdate"
                 android:layout_width="match_parent"
@@ -45,7 +45,6 @@
                 android:text="tvEventstartdate~tvEventenddate"
                 android:textColor="#756A57"
                 android:typeface="serif"/>
-
             <TextView
                 android:id="@+id/tvEventplace"
                 android:layout_width="match_parent"
@@ -54,9 +53,7 @@
                 android:text="tvEventplace"
                 android:textColor="#756A57"
                 android:typeface="serif"/>
-
         </LinearLayout>
-
     </FrameLayout>
 
 </androidx.cardview.widget.CardView>

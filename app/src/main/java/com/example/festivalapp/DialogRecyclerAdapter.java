@@ -59,10 +59,11 @@ public class DialogRecyclerAdapter extends RecyclerView.Adapter<DialogRecyclerAd
         cardView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                //지도 지우기
                 mainActivity.clearMap();
+                //값-화면 전환
                 Intent intent = new Intent(activity, DetailInfoActivity.class);
                 intent.putExtra("contentid", mDataset.get(position).getContentid());
-                //지도 지우기
                 activity.startActivity(intent);
                 Log.e("ViewHolder onCreateViewHolder", ""+mDataset.get(position).getContentid());
             }
