@@ -66,9 +66,6 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
     //검색바
     private SearchView searchBar;
 
-    //FirebaseFirestore
-    private FirebaseFirestore firestore= FirebaseFirestore.getInstance();
-
     //Fragment
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -184,11 +181,11 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
 
         Log.e("실행", "MainActivity:onCreate()");
 
+        /* 프래그먼트 */
         fragmentManager = getSupportFragmentManager();
         Log.e("실행", "MainActivity:getSupportFragmentManager()");
         fragmentTransaction = fragmentManager.beginTransaction();
         Log.e("실행", "MainActivity:beginTransaction()");
-        mapFragment = new MapFragment();
 
         //Bundle
         bundle = new Bundle();
@@ -200,11 +197,14 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
         bundle.putDouble("longX",longX);
         bundle.putDouble("latY",latY);
 
+        //mapFragment
+        mapFragment = new MapFragment();
         mapFragment.setArguments(bundle);
         Log.e("실행", "MainActivity:mapFragment.setArguments(bundle)");
         fragmentTransaction.replace(R.id.fragmentmap, mapFragment);
         Log.e("실행", "MainActivity:add()");
 
+        //ListFragment
         ListFragment listFragment = new ListFragment();
         listFragment.setArguments(bundle);
         Log.e("실행", "MainActivity:listFragment.setArguments(bundle)");

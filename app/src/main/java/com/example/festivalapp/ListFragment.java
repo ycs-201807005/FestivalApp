@@ -78,7 +78,7 @@ public class ListFragment extends Fragment {
         /*데이터 가져오기*/
         for (int i = 0; i < contentIdList.size(); i++) {
             Log.e("실행", contentIdList.get(i));
-            String contentid = contentIdList.get(i); //1930109
+            String contentid = contentIdList.get(i);
             Query query = eventsReference.whereEqualTo("contentid", contentid);
             query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -91,6 +91,7 @@ public class ListFragment extends Fragment {
                             String eventenddate = (String) document.get("eventenddate");
                             String eventplace = (String) document.get("eventplace");
                             festivalsList.add(new FestivalInfo(contentid,firstimage,title,eventstartdate,eventenddate,eventplace));
+                            Log.e(TAG,"festivalsList 추가 contentid - "+contentid);
                         }
                     } else {
                         Log.e(TAG, "query - task failed");

@@ -221,7 +221,6 @@ public class ContentIdListActivity extends ConfigActivity {
                                 Log.e(TAG, "MapFragment:marker-contentIdList: " + contentIdList.size());
                             }
                         }
-                        //contentIdList.add("1930108");
                     }
                     else {
                         contentIdList.add("주변에서 진행 중인 축제가 없습니다.");
@@ -243,8 +242,6 @@ public class ContentIdListActivity extends ConfigActivity {
         Intent intent = new Intent(this, MainActivity.class);
         Log.e(TAG,"contentIdList"+contentIdList.size());
         intent.putExtra("contentIdList",contentIdList);
-        //intent.putExtra("longX",longX);
-        //intent.putExtra("latY",latY);
         intent.putExtra("longX",longX);
         intent.putExtra("latY",latY );
         startActivity(intent);//실행
