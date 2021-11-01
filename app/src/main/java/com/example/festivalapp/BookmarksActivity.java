@@ -63,15 +63,17 @@ public class BookmarksActivity extends AppCompatActivity {
                                 ArrayList<MarkerInfo> bookmarkList = new ArrayList<>();
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     bookmarkList.add(new MarkerInfo(
+                                            document.get("firstimage").toString(),
                                             document.getData().get("title").toString(),
                                             document.getData().get("contentid").toString(),
                                             document.getData().get("eventplace").toString()));
 
                                     String contentId = document.getData().get("contentid").toString();
+                                    String image = document.getData().get("firstimage").toString();
                                     String title = document.getData().get("title").toString();
                                     String eventplace = document.getData().get("eventplace").toString();
 
-                                    MarkerInfo markerInfo = new MarkerInfo(contentId, title, eventplace);
+                                    MarkerInfo markerInfo = new MarkerInfo(contentId, image, title, eventplace);
                                     bmarksList.add(markerInfo);
                                 }
                                 recyclerView = findViewById(R.id.recyclerBmarks);

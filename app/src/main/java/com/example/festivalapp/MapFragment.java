@@ -3,8 +3,10 @@ package com.example.festivalapp;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +78,6 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
         Log.e("실행", "MapFragment:onCreateView()");
 
         if (bundle != null) {
-            // Inflate the layout for this fragment
             //Context
             mContext = getActivity();
             mainActivity = (MainActivity) getActivity();
@@ -126,6 +127,7 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
 
     /* Markers */
     private void createMarkers() {
+        mapPOIItems.clear();
         /* contentid가 Firebase에 저장되어 있을 때만 */
         //contentid 검색
         for (int i = 0; i < contentIdList.size(); i++) {
@@ -214,9 +216,8 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
 
     /* custom 말풍선 Class*/
     class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter {
-        private RecyclerView dialogRecyclerView; // RecyclerView
-        public Dialog dialog; // 출력할 Dialog 객체
-        private ArrayList<MarkerInfo> markerInfos = new ArrayList<MarkerInfo>(); //WriteInfo 리스트
+        //private RecyclerView dialogRecyclerView; // RecyclerView
+        ArrayList<String> redundancies = new ArrayList<String>(); //중복 리스트
 
         private final View mCalloutBalloon;
         private int position;
@@ -225,11 +226,11 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
             mCalloutBalloon = getLayoutInflater().inflate(R.layout.custom_callout_balloon, null);
         }
 
-        ArrayList<String> redundancies = new ArrayList<String>(); //중복 리스트
         @Override
         public View getCalloutBalloon(MapPOIItem mapPOIItem) {
             //마커 클릭 시 표시할 뷰 (말풍선)
             Log.e("실행", "CustomCalloutBalloonAdapter:getCalloutBalloon()");
+            redundancies.clear();
 
             /*마커 중복 검사*/
             //클릭된 마커의 좌표 비교 : contentid -> mapx, mapy
@@ -242,12 +243,12 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
             //존재하는 marker 중에서 같은 좌표가 있는 경우
             for (int m = 0; m < mapPOIItems.size(); m++) {
                 MapPoint mapPoint = mapPOIItems.get(m).getMapPoint();
-                double y= mapPoint.getMapPointGeoCoord().latitude;
-                double x= mapPoint.getMapPointGeoCoord().longitude;
+                double y = mapPoint.getMapPointGeoCoord().latitude;
+                double x = mapPoint.getMapPointGeoCoord().longitude;
                 Log.e("실행", "callLat-위도 -y좌표 :37=" + y);
                 Log.e("실행", "callLong-경도 -x좌표 :126=" + x);
 
-                if (callLat==y && callLong==x) {
+                if (callLat == y && callLong == x) {
                     redundancies.add(String.valueOf(mapPOIItems.get(m).getTag()));
                 }
             }
@@ -257,7 +258,7 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
 
             if (redundancies.size() > 1) {
                 //RecyclerDialog출력 - redundancies 전달!
-                //showAlertDialogMarkers();
+                showAlertDialogMarkers();
                 return null;
             } else {
                 String contentid = "" + mapPOIItem.getTag();
@@ -289,42 +290,13 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
         }
 
         /*Dialog*/
-        private void showAlertDialogMarkers() { //->MainActivity에서 출력?
-            //Display display = getWindowManager().getDefaultDisplay();
-            //Point size = new Point();
-            dialog = new Dialog(mContext);
+        private void showAlertDialogMarkers() {
+            MarkersDialogFragment dialog = new MarkersDialogFragment();
+            Bundle args = new Bundle();
+            args.putStringArrayList("redundancies",redundancies);
+            dialog.setArguments(args); // 데이터 전달
 
-            //display.getRealSize(size);
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-
-            LayoutInflater inf = getLayoutInflater();
-            View dialogView = inf.inflate(R.layout.dialog_layout, null);
-            // Dialog layout 선언
-
-            lp.copyFrom(dialog.getWindow().getAttributes());
-            //int width = size.x;
-            //lp.width = width * 80 / 100; // 사용자 화면의 80%
-            lp.height = WindowManager.LayoutParams.WRAP_CONTENT; // 높이는 내용 전체 높이만큼
-
-            dialog.setContentView(dialogView); // Dialog에 선언했던 layout 적용
-            dialog.setCanceledOnTouchOutside(true); // 외부 touch 시 Dialog 종료
-
-            dialog.getWindow().setAttributes(lp); // 지정한 너비, 높이 값 Dialog에 적용
-
-        /*
-        다음 4줄의 코드는 RecyclerView를 정의하기 위한 View, Adapter선언 코드이다.
-        1. RecyclerView id 등록
-        2. 수직방향으로 보여줄 예정이므로 LinearLayoutManager 등록
-           2차원이면 GridLayoutManager 등 다른 Layout을 선택
-        3. adapter에 topic Array 넘겨서 출력되게끔 전달
-        4. adapter 적용
-        */
-            dialogRecyclerView = (RecyclerView) dialogView.findViewById(R.id.dialogRecyclerView);
-            dialogRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-            DialogRecyclerAdapter adapter = new DialogRecyclerAdapter(/*this,*/markerInfos);
-            dialogRecyclerView.setAdapter(adapter);
-            dialog.show(); // Dialog 출력
+            dialog.show(getActivity().getSupportFragmentManager(),"tag");
         }
     }
-
 }

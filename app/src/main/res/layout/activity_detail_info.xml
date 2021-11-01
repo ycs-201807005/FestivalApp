@@ -26,19 +26,6 @@
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"
                         android:background="#FBF7EB"/>
-                    <!--북마크 버튼
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="bottom|right"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="30dp"
-                        app:cardCornerRadius="10dp">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            app:srcCompat="@drawable/ic_bookmark0" />
-                    </androidx.cardview.widget.CardView>-->
                     <ImageButton
                         android:id="@+id/btnBook"
                         android:layout_width="50dp"

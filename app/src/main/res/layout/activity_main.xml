@@ -8,54 +8,51 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start" >
 
-    <!-- toolbar -->
-    <include layout="@layout/activity_toolbar" />
 
-    <LinearLayout
+    <!-- 축제 지도 및 목록 -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <!--임시버튼
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:text="Logtout" />
-        <Button
-            android:id="@+id/btnMypage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mypage" />-->
-
-        <!-- 축제 지도 및 목록 -->
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="60dp">
-            <LinearLayout
+            android:orientation="vertical">
+
+            <!-- toolbar -->
+            <include layout="@layout/activity_toolbar" />
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp">
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragmentmap"
                     android:name="com.example.festivalapp.MapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="750dp"
                     tools:layout="@layout/fragment_map" />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/fragmentlist"
-                    android:name="com.example.festivalapp.ListFragment"
+                <SearchView
+                    android:id="@+id/searchView_search"
                     android:layout_width="match_parent"
-                    android:layout_height="750dp"
-                    tools:layout="@layout/fragment_list" />
-            </LinearLayout>
-        </ScrollView>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight = "10dp"
+                    android:background="@drawable/layout_content_roundcorner"
+                    app:iconifiedByDefault="true"
+                    app:queryHint="주소 입력"
+                    app:searchIcon="@drawable/ic_baseline_search_24" />
+            </FrameLayout>
 
-    </LinearLayout>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentlist"
+                android:name="com.example.festivalapp.ListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="750dp"
+                tools:layout="@layout/fragment_list" />
 
+        </LinearLayout>
+    </ScrollView>
 
 
     <com.google.android.material.navigation.NavigationView

@@ -93,7 +93,7 @@ public class ListFragment extends Fragment {
                             festivalsList.add(new FestivalInfo(contentid,firstimage,title,eventstartdate,eventenddate,eventplace));
                         }
                     } else {
-                        Log.e("실행", "query - task failed");
+                        Log.e(TAG, "query - task failed");
                     }
 
                     if(contentid==contentIdList.get(contentIdList.size()-1)){

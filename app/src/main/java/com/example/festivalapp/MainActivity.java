@@ -1,15 +1,24 @@
 package com.example.festivalapp;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -20,6 +29,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.festivalapp.MapFragment;
 import com.example.festivalapp.R;
@@ -34,7 +45,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends ConfigActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
@@ -44,6 +57,9 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+
+    //검색바
+    private SearchView searchBar;
 
     //FirebaseFirestore
     private FirebaseFirestore firestore= FirebaseFirestore.getInstance();
@@ -67,7 +83,67 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
         // Toolbar 상단 메뉴
         setToolbar();
 
-        //화면
+        /* 검색바 */
+        searchBar = findViewById(R.id.searchView_search);
+        searchBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Log.e(TAG,"클릭-"+searchBar.isIconified());
+                if(searchBar.isIconified()) {
+                    searchBar.setIconified(false);
+                    //Log.e(TAG,"클릭-"+searchBar.isIconified());
+                }
+            }
+        });
+
+        int searchCloseButtonId = searchBar.getContext().getResources()
+                .getIdentifier("android:id/search_close_btn", null, null);
+        ImageView closeButton = (ImageView) this.searchBar.findViewById(searchCloseButtonId);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Log.e(TAG,"닫기버튼-"+searchBar.isIconified());
+                searchBar.setIconified(true);
+                //Log.e(TAG,"닫기버튼-"+searchBar.isIconified());
+            }
+        });
+
+        searchBar.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View view, boolean b)
+            {   //Log.e(TAG,"포커스변경-"+searchBar.isIconified());
+                if(searchBar.isIconified()) {
+                    searchBar.setIconified(false);
+                }
+                //Log.e(TAG,"포커스변경-"+searchBar.isIconified());
+            }
+        });
+
+        // searchView Listener
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // 검색 버튼 누를 시 호출
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //주소 전달
+                //좌표로 변경
+                //if(변경 가능)
+                //위치를 변경하시겠습니까? Yes/No
+                //ContentIdListActivity 부터 다시 불러오기
+                Location location = findGeoPoint(getApplicationContext(), query);
+                Log.e(TAG,"("+ location.getLatitude() + "," + location.getLongitude() + ")");
+
+                return true;
+            }
+
+            // 검색 입력값 변경 시 호출
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
+
+        /* 화 면 */
         Display display = getWindowManager().getDefaultDisplay();
         FragmentContainerView fragmentContainerViewmap = (FragmentContainerView)findViewById(R.id.fragmentmap);
         FragmentContainerView fragmentContainerViewlist = (FragmentContainerView)findViewById(R.id.fragmentlist);
@@ -188,4 +264,28 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
+
+    public static Location findGeoPoint(Context mcontext, String address) {
+        Location loc = new Location("");
+        Geocoder coder = new Geocoder(mcontext);
+        List<Address> addr = null;// 한좌표에 대해 두개이상의 이름이 존재할수있기에 주소배열을 리턴받기 위해 설정
+
+        try {
+            addr = coder.getFromLocationName(address, 5);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }// 몇개 까지의 주소를 원하는지 지정 1~5개 정도가 적당
+        if (addr != null) {
+            for (int i = 0; i < addr.size(); i++) {
+                Address lating = addr.get(i);
+                double lat = lating.getLatitude(); // 위도가져오기
+                double lon = lating.getLongitude(); // 경도가져오기
+                loc.setLatitude(lat);
+                loc.setLongitude(lon);
+            }
+        }
+        return loc;
+    }
+
 }
