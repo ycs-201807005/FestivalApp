@@ -127,41 +127,40 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
             // 검색 버튼 누를 시 호출
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //주소 전달
-                //좌표로 변경
-                //if(변경 가능)
-                //위치를 변경하시겠습니까? Yes/No
-                //ContentIdListActivity 부터 다시 불러오기
-
                 //입력 주소로 좌표 구함
                 Location location = findGeoPoint(getApplicationContext(), query);
-                Log.e(TAG,"("+ location.getLatitude() + "," + location.getLongitude() + ")");
+                Log.e(TAG,"("+ location.getLatitude() + "," + location.getLongitude() + ")"); //(latY,longX)=(37,126)
                 //주소 구함
                 List<Address> address=null;
-                String addr;
+                String addr = "";
                 Geocoder g = new Geocoder(getApplicationContext());
                 try {
-                    address = g.getFromLocation(location.getLatitude(),location.getLongitude(),10); //(y,x)
+                    address = g.getFromLocation(location.getLatitude(),location.getLongitude(),10); //(latY,longX)=(37,126)
                     addr = address.get(0).getAddressLine(0);
                     Log.e(TAG, "[현재위치] 주소 = " + addr);
-
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    addr = "주소를 찾을 수 없습니다.";
+                }
+                finally {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setTitle("현재 위치 정보");
                     builder.setMessage("현재 위치가 설정됩니다.\n현재 주소 : " + addr);
                     builder.setCancelable(true);
+                    String finalAddr = addr;
                     builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             Log.e(TAG,"showDialogForLocationSave() - 확인");
                             /* 현재 사용자 위치 저장 */
-                            saveLocation(location.getLatitude(), location.getLongitude(), addr);
+                            saveLocation(location.getLatitude(), location.getLongitude(), finalAddr); //(latY,longX)=(37,126)
                         }
                     });
                     builder.show();
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                    return true;
                 }
-                return true;
+
             }
             // 검색 입력값 변경 시 호출
             @Override
@@ -325,7 +324,7 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
     }
 
     /* 사용자 현재 위치 정보 Firebase에 저장 */
-    private void  saveLocation(double longitude, double latitude, String addr){
+    private void  saveLocation(double latitude, double longitude, String addr){  //(latY,longX)=(37,126)
         /* Firebase : Firestore */
         FirebaseFirestore firestore = FirebaseFirestore.getInstance(); //FirebaseFirestore
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); //FirebaseUser

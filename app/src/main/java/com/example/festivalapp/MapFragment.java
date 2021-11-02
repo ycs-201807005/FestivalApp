@@ -59,8 +59,6 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
         super.onCreate(savedInstanceState);
         Log.e("실행", "MapFragment:onCreate()");
 
-        /* contentIdList.add("주변에서 진행 중인 축제가 없습니다."); 처리 필요 */
-
         bundle = getArguments();
         if (bundle != null) {
             Log.e(TAG, "bundle!=null");
@@ -95,9 +93,6 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
             mapViewContainer.addView(mapView);
             Log.e("실행", "MapFragment:addView()");
 
-            // 커스텀 말풍선 등록
-            //mapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
-            //Log.e("실행", "MapFragment:setCalloutBalloonAdapter()");
             //MapView-Marker Event 감지
             mapView.setPOIItemEventListener(this);
             Log.e("실행", "MapFragment:setPOIItemEventListener()");
@@ -130,42 +125,58 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
     /* Markers */
     private void createMarkers() {
         mapPOIItems.clear();
-        /* contentid가 Firebase에 저장되어 있을 때만 */
-        //contentid 검색
-        for (int i = 0; i < contentIdList.size(); i++) {
-            Log.e("실행", contentIdList.get(i));
-            String contentid = contentIdList.get(i); //1930109
-            Query query = eventsReference.whereEqualTo("contentid", contentid);
-            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.e(TAG, "MapFragment:marker-for(document): " + document.getString("mapx"));
-                            /* 마커 생성 */
-                            //mapPoint
-                            double mapy = Double.parseDouble(Objects.requireNonNull(document.getString("mapy")));
-                            double mapx = Double.parseDouble(Objects.requireNonNull(document.getString("mapx")));
-                            MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(mapy, mapx);
-                            //마커(Marker) 추가
-                            MapPOIItem marker = new MapPOIItem();
-                            marker.setItemName(document.getString("title")); // =title
-                            marker.setTag(Integer.parseInt(Objects.requireNonNull(document.getString("contentid")))); //tag=Cursor의 Row 번호 저장 : " row는 0부터 시작 "
-                            Log.e("실행", "MapFragment:marker.setTag() = " + document.getString("contentid"));
-                            Log.e("실행", "MapFragment:marker.setItemName() = " + document.getString("title"));
-                            Log.e("실행", "MapFragment:marker.mapPoint = " + mapx + ", " + mapy);
-                            marker.setMapPoint(mapPoint);
-                            marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-                            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-                            //맵 뷰에 추가
-                            mapView.addPOIItem(marker);
-                            mapPOIItems.add(marker);
+
+        /* contentIdList.add("주변에서 진행 중인 축제가 없습니다."); 처리 필요 */
+        if(contentIdList.get(0).equals("주변에서 진행 중인 축제가 없습니다.")){
+            Log.e("실행", "contentIdList.get(0)-" + contentIdList.get(0));
+            MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(latY,longX);
+            MapPOIItem marker = new MapPOIItem();
+            marker.setItemName("주변 축제가 없습니다."); // =title
+            marker.setTag(0);
+            marker.setMapPoint(mapPoint);
+            marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+            //맵 뷰에 추가
+            mapView.addPOIItem(marker);
+        }
+        else{
+            /* contentid가 Firebase에 저장되어 있을 때만 */
+            //contentid 검색
+            for (int i = 0; i < contentIdList.size(); i++) {
+                Log.e("실행", contentIdList.get(i));
+                String contentid = contentIdList.get(i); //1930109
+                Query query = eventsReference.whereEqualTo("contentid", contentid);
+                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.e(TAG, "MapFragment:marker-for(document): " + document.getString("mapx"));
+                                /* 마커 생성 */
+                                //mapPoint
+                                double mapy = Double.parseDouble(Objects.requireNonNull(document.getString("mapy")));
+                                double mapx = Double.parseDouble(Objects.requireNonNull(document.getString("mapx")));
+                                MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(mapy, mapx);
+                                //마커(Marker) 추가
+                                MapPOIItem marker = new MapPOIItem();
+                                marker.setItemName(document.getString("title")); // =title
+                                marker.setTag(Integer.parseInt(Objects.requireNonNull(document.getString("contentid")))); //tag=Cursor의 Row 번호 저장 : " row는 0부터 시작 "
+                                Log.e("실행", "MapFragment:marker.setTag() = " + document.getString("contentid"));
+                                Log.e("실행", "MapFragment:marker.setItemName() = " + document.getString("title"));
+                                Log.e("실행", "MapFragment:marker.mapPoint = " + mapx + ", " + mapy);
+                                marker.setMapPoint(mapPoint);
+                                marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+                                marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                                //맵 뷰에 추가
+                                mapView.addPOIItem(marker);
+                                mapPOIItems.add(marker);
+                            }
+                        } else {
+                            Log.e("실행", "query - task failed");
                         }
-                    } else {
-                        Log.e("실행", "query - task failed");
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -179,35 +190,41 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
         //사용자가 MapView 에 등록된 POIItem 아이콘(마커)를 터치한 경우 호출
         ArrayList<String> redundancies = new ArrayList<String>(); //중복 리스트
 
-        /*마커 중복 검사*/
-        //클릭된 마커의 좌표 비교 : contentid -> mapx, mapy
-        MapPoint callmapPoint = mapPOIItem.getMapPoint(); //선택된 마커 포인트
-        double callLat = callmapPoint.getMapPointGeoCoord().latitude; //선택된 마커 latitude-위도 -y좌표 :37
-        double callLong = callmapPoint.getMapPointGeoCoord().longitude; //선택된 마커 longitude-경도 -x좌표 :126
-        Log.e("실행", "callLat-위도 -y좌표 :37=" + callLat);
-        Log.e("실행", "callLong-경도 -x좌표 :126=" + callLong);
+        /* contentIdList.add("주변에서 진행 중인 축제가 없습니다."); 처리 필요 */
+        if(mapPOIItem.getTag()==0){
 
-        //존재하는 marker 중에서 같은 좌표가 있는 경우
-        for (int m = 0; m < mapPOIItems.size(); m++) {
-            MapPoint mapPoint = mapPOIItems.get(m).getMapPoint();
-            double y = mapPoint.getMapPointGeoCoord().latitude;
-            double x = mapPoint.getMapPointGeoCoord().longitude;
-            Log.e("실행", "callLat-위도 -y좌표 :37=" + y);
-            Log.e("실행", "callLong-경도 -x좌표 :126=" + x);
-
-            if (callLat == y && callLong == x) {
-                redundancies.add(String.valueOf(mapPOIItems.get(m).getTag()));
-            }
         }
-        Log.e("실행", String.valueOf(redundancies.size()));
+        else{
+            /*마커 중복 검사*/
+            //클릭된 마커의 좌표 비교 : contentid -> mapx, mapy
+            MapPoint callmapPoint = mapPOIItem.getMapPoint(); //선택된 마커 포인트
+            double callLat = callmapPoint.getMapPointGeoCoord().latitude; //선택된 마커 latitude-위도 -y좌표 :37
+            double callLong = callmapPoint.getMapPointGeoCoord().longitude; //선택된 마커 longitude-경도 -x좌표 :126
+            Log.e("실행", "callLat-위도 -y좌표 :37=" + callLat);
+            Log.e("실행", "callLong-경도 -x좌표 :126=" + callLong);
 
-        if (redundancies.size() > 1) {
-            //RecyclerDialog출력 - redundancies 전달!
-            showAlertDialogMarkers(redundancies);
-        } else {
-            String contentid = "" + mapPOIItem.getTag();
-            Log.e("실행", "contentid=" + contentid);
-            showAlertDialogFestival(contentid);
+            //존재하는 marker 중에서 같은 좌표가 있는 경우
+            for (int m = 0; m < mapPOIItems.size(); m++) {
+                MapPoint mapPoint = mapPOIItems.get(m).getMapPoint();
+                double y = mapPoint.getMapPointGeoCoord().latitude;
+                double x = mapPoint.getMapPointGeoCoord().longitude;
+                Log.e("실행", "callLat-위도 -y좌표 :37=" + y);
+                Log.e("실행", "callLong-경도 -x좌표 :126=" + x);
+
+                if (callLat == y && callLong == x) {
+                    redundancies.add(String.valueOf(mapPOIItems.get(m).getTag()));
+                }
+            }
+            Log.e("실행", String.valueOf(redundancies.size()));
+
+            if (redundancies.size() > 1) {
+                //RecyclerDialog출력 - redundancies 전달!
+                showAlertDialogMarkers(redundancies);
+            } else {
+                String contentid = "" + mapPOIItem.getTag();
+                Log.e("실행", "contentid=" + contentid);
+                showAlertDialogFestival(contentid);
+            }
         }
     }
 

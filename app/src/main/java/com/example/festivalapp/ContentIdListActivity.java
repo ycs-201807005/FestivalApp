@@ -221,17 +221,21 @@ public class ContentIdListActivity extends ConfigActivity {
                                 Log.e(TAG, "MapFragment:marker-contentIdList: " + contentIdList.size());
                             }
                         }
+                        myhandler.sendEmptyMessage(LOAD_SUCCESS);
                     }
                     else {
                         contentIdList.add("주변에서 진행 중인 축제가 없습니다.");
                         Log.e(TAG,"주변에서 진행 중인 축제가 없습니다.");
+                        myhandler.sendEmptyMessage(LOAD_SUCCESS);
                     }
 
                 } catch (Exception e) {
+                    contentIdList.add("주변에서 진행 중인 축제가 없습니다.");
                     Log.e(TAG,"API - 위치기반 조회 실패");
+                    myhandler.sendEmptyMessage(LOAD_SUCCESS);
                 }
 
-                myhandler.sendEmptyMessage(LOAD_SUCCESS);
+
             }
         });
 
