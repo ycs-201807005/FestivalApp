@@ -8,16 +8,22 @@
     tools:context=".AllFestivalInfoUpdate">
 
     <Button
+        android:id="@+id/btnRunningUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Running Update" />
+
+    <Button
+        android:id="@+id/btnAllInsert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Data Insert" />
+
+    <Button
         android:id="@+id/btnAllDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AllDelete" />
-
-    <Button
-        android:id="@+id/btnNewInsert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NewInsert" />
+        android:text="All Data Delete"/>
 
     <Button
         android:id="@+id/btnMngLogout"

@@ -18,6 +18,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -56,7 +57,7 @@ public class ContentIdListActivity extends ConfigActivity {
     private String contentTypeId = "&contentTypeId=15";
     private String radius = "&radius=15000"; //반경 : Max값 20000m=20Km
 
-    // 응답 값
+    // 응답 값 - 반경 내 현재 진행 중인 행사 id 목록 - MainActivity로 전달
     private ArrayList<String> contentIdList = new ArrayList<String>();
 
     /* ProgressDialog */
@@ -67,7 +68,7 @@ public class ContentIdListActivity extends ConfigActivity {
     private FirebaseUser user;
     private CollectionReference eventsReference;//firestore - events 참조
 
-    private ArrayList<String> storecontentIds = new ArrayList<String>();
+    private ArrayList<String> storecontentIds = new ArrayList<String>(); //파베에 저장되어 있는 현재 진행 중인 행사 id 목록
 
     /**/
     @Override
@@ -78,13 +79,14 @@ public class ContentIdListActivity extends ConfigActivity {
 
         firestore = FirebaseFirestore.getInstance(); //FirebaseFirestore
         eventsReference= firestore.collection("events");
-        eventsReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Query query = eventsReference.whereEqualTo("running", "Y");
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String contentid =  document.getData().get("contentid").toString();
-                        storecontentIds.add(contentid);
+                        storecontentIds.add(contentid); //파베에 저장되어 있는 현재 진행 중인 행사 id 목록
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -156,7 +158,6 @@ public class ContentIdListActivity extends ConfigActivity {
     }
 
     private JSONObject jsonObject;
-
     public void RequestURLConn(String REQUEST_URL) {
         // 1. URL 연결
         try {
@@ -201,10 +202,9 @@ public class ContentIdListActivity extends ConfigActivity {
                     String loc_requestUrl = ServiceURL + ServiceKey + numOfRows + MobileOS + MobileApp + arrange + contentTypeId + "&mapX=" + longX + "&mapY=" + latY + radius + "&_type=json";
                     Log.e(TAG,"loc_requestUrl="+loc_requestUrl);
                     RequestURLConn(loc_requestUrl);
-
                     //배열로된 자료를 가져올때
                     JSONArray LocBased_Array = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");  // JSONArray [{},{}] 생성
-                        Log.e(TAG,"개수="+LocBased_Array.length());
+                        Log.e(TAG,"개수="+LocBased_Array.length()); // 위치 기반 관광 정보 조회 결과 개수
                         /* 값 없을 때 : No Value 처리 추가 */
                     if (LocBased_Array.length()>0){
                         Log.e(TAG,"storecontentIds-"+storecontentIds.size());
@@ -215,7 +215,7 @@ public class ContentIdListActivity extends ConfigActivity {
                             Log.e(TAG,Object.getString("contentid"));
                             String contentid = Object.getString("contentid");
                             //현재 진행중인 행사만 = firebase에 저장된 행사만 필터링
-                            if(storecontentIds.contains(contentid)){
+                            if(storecontentIds.contains(contentid)){ // 파베 현재 진행 중 목록에 포함되는 반경 내 행사 id
                                 contentIdList.add(contentid);
                                 Log.e(TAG, "MapFragment:marker-contentid: " + contentid);
                                 Log.e(TAG, "MapFragment:marker-contentIdList: " + contentIdList.size());
@@ -234,7 +234,6 @@ public class ContentIdListActivity extends ConfigActivity {
                     Log.e(TAG,"API - 위치기반 조회 실패");
                     myhandler.sendEmptyMessage(LOAD_SUCCESS);
                 }
-
 
             }
         });

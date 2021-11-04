@@ -43,6 +43,8 @@ public class Eventinfo {
     //4.이미지정보조회
    private ArrayList<String> images;
 
+   private String running;
+
     //생성자
     public Eventinfo(ArrayList<String> values) {
         this.contentid = values.get(0);
@@ -70,6 +72,8 @@ public class Eventinfo {
 
         this.homepage = values.get(21);
         this.overview = values.get(22);
+
+        running = "N";
 
         Log.e("test_api_list" , "collection - Eventinfo 생성자");
     }
@@ -103,6 +107,8 @@ public class Eventinfo {
         this.overview = values.get(22);
 
         this.images = images;
+
+        running = "N";
 
         Log.e("test_api_list" , "collection - 이미지 리스트 포함 Eventinfo 생성자");
     }
