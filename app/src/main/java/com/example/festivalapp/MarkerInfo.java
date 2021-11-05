@@ -2,13 +2,13 @@ package com.example.festivalapp;
 
 public class MarkerInfo {
     private String contentid;
-    private String image;
+    private String firstimage;
     private String title;
     private String eventplace;
 
-    public MarkerInfo(String contentid, String image, String title, String eventplace){
+    public MarkerInfo(String contentid, String firstimage, String title, String eventplace){
         this.contentid = contentid;
-        this.image = image;
+        this.firstimage = firstimage;
         this.title = title;
         this.eventplace = eventplace;
     }
@@ -37,11 +37,9 @@ public class MarkerInfo {
         this.eventplace = eventplace;
     }
 
-    public String getImage() {
-        return image;
+    public String getFirstimage() {
+        return firstimage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+    public void setFirstimage(String image) { this.firstimage = firstimage; }
 }

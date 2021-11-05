@@ -108,6 +108,7 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
             mapView.zoomIn(true);
             // 줌 아웃
             mapView.zoomOut(true);
+            
 
             /* Marker 생성 */
             createMarkers();

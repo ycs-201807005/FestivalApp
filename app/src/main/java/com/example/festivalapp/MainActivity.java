@@ -175,8 +175,8 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
         FragmentContainerView fragmentContainerViewlist = (FragmentContainerView)findViewById(R.id.fragmentlist);
         Point size = new Point();
         display.getRealSize(size);
-        fragmentContainerViewmap.getLayoutParams().height = size.y;
-        fragmentContainerViewlist.getLayoutParams().height = size.y;
+        fragmentContainerViewmap.getLayoutParams().height = size.y-150;
+        fragmentContainerViewlist.getLayoutParams().height = size.y-100;
 
         Log.e("실행", "MainActivity:onCreate()");
 

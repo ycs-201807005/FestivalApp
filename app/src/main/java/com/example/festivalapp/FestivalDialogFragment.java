@@ -89,7 +89,7 @@ public class FestivalDialogFragment extends DialogFragment {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String contentid = (String) document.get("contentid");
-                        String image = (String) document.get("firstimage"); //imgvImage
+                        String firstimage = (String) document.get("firstimage"); //imgvImage
                         String title = (String) document.get("title");
                         String eventstartdate = (String) document.get("eventstartdate");
                         String eventenddate = (String) document.get("eventenddate");
@@ -97,7 +97,7 @@ public class FestivalDialogFragment extends DialogFragment {
 
                         //이미지
                         ImageView imgvImage = view.findViewById(R.id.imgvImage);
-                        Glide.with(view).load(image).override(view.getWidth(), view.getHeight()).into(imgvImage);
+                        Glide.with(view).load(firstimage).override(view.getWidth(), view.getHeight()).into(imgvImage);
                         //제목
                         TextView tvTitle = view.findViewById(R.id.tvTitle);
                         tvTitle.setText(title);

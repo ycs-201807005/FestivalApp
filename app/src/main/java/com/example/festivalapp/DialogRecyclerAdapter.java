@@ -70,7 +70,7 @@ public class DialogRecyclerAdapter extends RecyclerView.Adapter<DialogRecyclerAd
         });
 
         //imgvThumbnail
-        String imgUrl = mDataset.get(position).getImage();
+        String imgUrl = mDataset.get(position).getFirstimage();
         ImageView imgvThumbnail = cardView.findViewById(R.id.imgvThumbnail);
         Glide.with(cardView).load(imgUrl).override(cardView.getWidth(), cardView.getHeight()).into(imgvThumbnail);
 

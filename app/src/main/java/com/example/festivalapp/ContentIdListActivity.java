@@ -221,6 +221,10 @@ public class ContentIdListActivity extends ConfigActivity {
                                 Log.e(TAG, "MapFragment:marker-contentIdList: " + contentIdList.size());
                             }
                         }
+                        if (contentIdList.size()==0){
+                            contentIdList.add("주변에서 진행 중인 축제가 없습니다.");
+                            Log.e(TAG,"주변에서 진행 중인 축제가 없습니다.");
+                        }
                         myhandler.sendEmptyMessage(LOAD_SUCCESS);
                     }
                     else {

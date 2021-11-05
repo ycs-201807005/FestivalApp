@@ -39,28 +39,12 @@ public class BookmarksActivity extends AppCompatActivity {
         } else {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference docRef = db.collection("users").document(user.getUid());
-            docRef.get().addOnCompleteListener((task) -> {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document != null) {
-                        if (document.exists()) {
-
-                        } else {
-                            myStartActivity(MypageActivity.class);
-                        }
-                    }
-                } else {
-
-                }
-            });
-
-            db.collection("users").document(user.getUid()).collection("bookmarks")
+            docRef.collection("bookmarks")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                ArrayList<MarkerInfo> bookmarkList = new ArrayList<>();
                                 for (QueryDocumentSnapshot document : task.getResult()) {
 
                                     String contentId = document.getData().get("contentid").toString();

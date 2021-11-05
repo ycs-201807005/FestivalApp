@@ -26,16 +26,9 @@
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"
                         android:background="#FBF7EB"/>
-                    <!--북마크 버튼
-                    <ImageButton
-                        android:id="@+id/btnBook"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="bottom|right"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginBottom="40dp"
-                        android:background="@drawable/ic_bookmark0"/>-->
+                    <!--북마크 버튼-->
                     <CheckBox
+                        android:id="@+id/btnBook"
                         android:layout_width="57dp"
                         android:layout_height="54dp"
                         android:layout_gravity="bottom|right"
@@ -134,7 +127,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="25dp"
-                    android:layout_marginBottom="5dp"
                     android:text="주변 정보 확인하기 →"
                     android:textSize="15dp"
                     android:textStyle="bold"

@@ -15,7 +15,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="5dp"
-            android:background="@color/black" />
+            android:background="@color/white" />
 
         <!-- 제목과 위치 -->
         <LinearLayout

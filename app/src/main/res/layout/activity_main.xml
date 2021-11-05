@@ -10,50 +10,60 @@
 
 
     <!-- 축제 지도 및 목록 -->
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        android:layout_height="wrap_content">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentmap"
+            android:name="com.example.festivalapp.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="750dp"
+            android:layout_marginTop="58dp"
+            tools:layout="@layout/fragment_map" />
+        <SearchView
+            android:id="@+id/searchView_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:layout_marginRight = "10dp"
+            android:background="@drawable/layout_content_roundcorner"
+            app:iconifiedByDefault="true"
+            app:queryHint="주소 입력"
+            app:searchIcon="@drawable/ic_baseline_search_24" />
+    </FrameLayout>
 
-            <!-- toolbar -->
-            <include layout="@layout/activity_toolbar" />
+    <SlidingDrawer
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:handle="@+id/handle"
+        android:content="@+id/fragmentlist"
+        android:allowSingleTap="true"
+        android:animateOnClick="true"
+        android:orientation="vertical"
+        android:topOffset="58dp">
+        <TextView
+            android:id="@+id/handle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/layout_orange_topround15"
+            android:paddingLeft="20dp"
+            android:paddingBottom="20dp"
+            android:text="▼ 진행 중인 주변 축제"
+            android:textSize="23dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:typeface="monospace"/>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentlist"
+            android:name="com.example.festivalapp.ListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            tools:layout="@layout/fragment_list" />
+    </SlidingDrawer>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp">
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/fragmentmap"
-                    android:name="com.example.festivalapp.MapFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="750dp"
-                    tools:layout="@layout/fragment_map" />
-                <SearchView
-                    android:id="@+id/searchView_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight = "10dp"
-                    android:background="@drawable/layout_content_roundcorner"
-                    app:iconifiedByDefault="true"
-                    app:queryHint="주소 입력"
-                    app:searchIcon="@drawable/ic_baseline_search_24" />
-            </FrameLayout>
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragmentlist"
-                android:name="com.example.festivalapp.ListFragment"
-                android:layout_width="match_parent"
-                android:layout_height="750dp"
-                tools:layout="@layout/fragment_list" />
-
-        </LinearLayout>
-    </ScrollView>
-
+    <!-- toolbar -->
+    <include layout="@layout/activity_toolbar" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/drawer_nav_menu"

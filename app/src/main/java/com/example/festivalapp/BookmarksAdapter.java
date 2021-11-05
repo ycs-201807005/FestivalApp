@@ -65,7 +65,7 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
         });
 
         //imgvThumbnail
-        String imgUrl = mDataset.get(position).getImage();
+        String imgUrl = mDataset.get(position).getFirstimage();
         ImageView imgvImage = cardView.findViewById(R.id.imgvThumbnail);
         Glide.with(cardView).load(imgUrl).override(cardView.getWidth(), cardView.getHeight()).into(imgvImage);
 
