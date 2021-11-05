@@ -9,7 +9,7 @@
     tools:context=".activity.ReviewWriteActivity">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -33,6 +33,7 @@
         android:rating="5" />
 
     <TextView
+        android:id="@+id/tvToday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="date : 2021-11-01"

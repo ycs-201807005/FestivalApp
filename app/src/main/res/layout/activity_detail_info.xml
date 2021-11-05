@@ -26,6 +26,16 @@
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"
                         android:background="#FBF7EB"/>
+                    <TextView
+                        android:id="@+id/imgvText"
+                        android:layout_width="match_parent"
+                        android:layout_height="270dp"
+                        android:gravity="center"
+                        android:text=""
+                        android:textSize="25dp"
+                        android:textColor="#FAA244"
+                        android:textStyle="bold"
+                        android:typeface="monospace"/>
                     <!--북마크 버튼-->
                     <CheckBox
                         android:id="@+id/btnBook"
@@ -165,6 +175,7 @@
                         android:typeface="serif"
                         android:background="@drawable/layout_titile_underline"/>
                     <TextView
+                        android:id="@+id/btnRvWrite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|center_vertical"

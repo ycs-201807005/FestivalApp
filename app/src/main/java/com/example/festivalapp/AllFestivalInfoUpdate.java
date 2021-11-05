@@ -213,7 +213,6 @@ public class AllFestivalInfoUpdate extends ConfigActivity {
                     Log.e(TAG, "currentDate"+String.valueOf(currentDate));
 
                     //1. Firebase에 저장된 전체 행사 정보들 검사
-                    //전체 삭제
                     eventsReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -229,8 +228,7 @@ public class AllFestivalInfoUpdate extends ConfigActivity {
 
                                         //2.진행 중인 행사 Update
                                         if(currentDate.compareTo(evtstartDate) >= 0 && currentDate.compareTo(evtendDate) <= 0){
-                                            /* 진행 중인 행사인 경우 */
-                                            //update("running","Y")
+                                            /* 진행 중인 행사인 경우 : update("running","Y") */
                                            eventsReference.document(docid).update("running","Y")
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
@@ -247,9 +245,7 @@ public class AllFestivalInfoUpdate extends ConfigActivity {
                                                     });
                                         } // if end : 현재 진행 중
                                         else {
-                                            /* 진행 중이 아닌 행사인 경우 */
-                                            //update("running","N")
-                                            /*
+                                            /* 진행 중이 아닌 행사인 경우 : update("running","N") */
                                             firestore.collection("users").document(docid).update("running","N")
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
@@ -263,7 +259,7 @@ public class AllFestivalInfoUpdate extends ConfigActivity {
                                                             Log.e(TAG,"진행 중 아닌 행사 Location:mapx Update Fail.");
                                                             //finish();
                                                         }
-                                                    });*/
+                                                    });
                                         } // else 현재 진행 x end
 
                                     } catch (ParseException e) {

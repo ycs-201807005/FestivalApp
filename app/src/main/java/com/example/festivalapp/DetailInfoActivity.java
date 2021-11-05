@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.festivalapp.activity.ConfigActivity;
 import com.example.festivalapp.activity.LoginActivity;
 import com.example.festivalapp.activity.MypageActivity;
+import com.example.festivalapp.activity.ReviewWriteActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,6 +43,7 @@ public class DetailInfoActivity extends ConfigActivity {
     private static final String TAG = "DetailInfoActivity";
 
     private CheckBox btnBook;
+    private TextView btnRvWrite;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -56,6 +58,7 @@ public class DetailInfoActivity extends ConfigActivity {
 
     private MarkerInfo markerInfo;
     private String contentid;
+    private String title="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,8 @@ public class DetailInfoActivity extends ConfigActivity {
         else {
             //모든 화면 닫고, 로그인 화면으로 이동
         }
+        btnRvWrite = (TextView)findViewById(R.id.btnRvWrite);//리뷰 작성 버튼
+        btnRvWrite.setOnClickListener(onClickListener);
 
         /* contentid 문서 가져오기 */
         Query query = eventsReference.whereEqualTo("contentid", contentid);
@@ -118,9 +123,13 @@ public class DetailInfoActivity extends ConfigActivity {
                         //대표이미지
                         String firstimage = document.getData().get("firstimage").toString();
                         Glide.with(imgvImage).load(firstimage).override(imgvImage.getWidth(), imgvImage.getHeight()).into(imgvImage);
+                        if(document.getData().get("running").toString()=="N"){
+                            TextView imgvText = (TextView)findViewById(R.id.imgvText);
+                            imgvText.setText("※ 진행 중이 아닌 축제 입니다.");
+                        }
 
                         //제목 및 개요
-                        String title = document.getData().get("title").toString();
+                        title = document.getData().get("title").toString();
                         tvTitle.setText(title);
                         tvOverview.setText(document.getData().get("overview").toString());
 
@@ -246,6 +255,12 @@ public class DetailInfoActivity extends ConfigActivity {
                             }
                         });
                     }
+                    break;
+                case R.id.btnRvWrite:
+                    Intent intent = new Intent(getApplication(), ReviewWriteActivity.class);
+                    intent.putExtra("contentid",contentid);
+                    intent.putExtra("title",title);
+                    startActivity(intent);
                     break;
             }
         }

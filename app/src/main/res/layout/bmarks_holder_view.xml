@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="3dp"
-    app:cardBackgroundColor="#B3FFFFFF">
+    app:cardBackgroundColor="#D9FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:paddingLeft="10dp"
                 android:text="test-title1"
                 android:textSize="20dp"
-                android:textColor="#5A048A"
+                android:textColor="#756A57"
                 android:textStyle="bold"
                 android:typeface="serif"
                 android:background="@drawable/layout_bmarks_leftunderline"/>
@@ -46,7 +46,7 @@
                 android:paddingTop="5dp"
                 android:text="eventplace"
                 android:textSize="15dp"
-                android:textColor="#5A048A"
+                android:textColor="#756A57"
                 android:background="@drawable/layout_bmarks_leftline"/>
         </LinearLayout>
     </LinearLayout>

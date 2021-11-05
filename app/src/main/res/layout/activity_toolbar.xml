@@ -13,9 +13,18 @@
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:titleTextColor="#434343"
+            app:titleTextColor="#756A57"
             android:background="#FCCD8E">
             <!--android:background="@android:color/transparent" 툴바 투명화-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Fiesta"
+                android:textSize="26dp"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic"
+                android:typeface="serif"/>
         </androidx.appcompat.widget.Toolbar>
     </LinearLayout>
 

@@ -46,6 +46,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
@@ -76,6 +77,10 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
     private ArrayList<String> contentIdList;
     private double latY; //사용자 위치 : y좌표 = 위도 = longitude
     private double longX; //사용자 위치 : x좌표 = 경도 = latitude
+
+    /* Firebase : Firestore */
+    FirebaseFirestore firestore = FirebaseFirestore.getInstance(); //FirebaseFirestore
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); //FirebaseUser
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,6 +254,18 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
 
         // NavigationView 좌측 메뉴 drawer_nav_menu
         navigationView = (NavigationView) findViewById(R.id.drawer_nav_menu);
+        //사용자 이름 가져오기
+        firestore.collection("users").document(user.getUid()).get()
+                .addOnCompleteListener((task) -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null) {
+                            String username = (String) document.get("name");
+                            navigationView.getMenu().getItem(0).setTitle(username + " 님");
+                        }
+                    } else {
+                    }
+                });
         actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 drawerLayout,
@@ -325,9 +342,6 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
 
     /* 사용자 현재 위치 정보 Firebase에 저장 */
     private void  saveLocation(double latitude, double longitude, String addr){  //(latY,longX)=(37,126)
-        /* Firebase : Firestore */
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance(); //FirebaseFirestore
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); //FirebaseUser
         Log.e(TAG,"user ="+user.getUid());
         try {
             firestore.collection("users").document(user.getUid()).update("mapx",longitude) //-경도 -x좌표 :126
