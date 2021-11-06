@@ -36,9 +36,10 @@
         android:id="@+id/tvToday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="2dp"
         android:text="date : 2021-11-01"
         android:textColor="#756A57"
-        android:textSize="15dp"
+        android:textSize="17dp"
         android:gravity="left"
         android:paddingLeft="10dp"/>
 
@@ -51,7 +52,7 @@
         android:background="#ffffff"
         android:hint="축제에 대한 솔직한 후기를 남겨주세요"
         android:textColorHint="#B4AB9A"
-        android:textSize="15dp"
+        android:textSize="17dp"
         android:textColor="#756A57"
         android:gravity="left"
         android:padding="10dp"/>

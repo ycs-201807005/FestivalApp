@@ -38,7 +38,7 @@ public class ReviewWriteActivity extends ConfigActivity {
         SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
         String current = sdformat.format(new Date());
         TextView tvToday = (TextView)findViewById(R.id.tvToday);
-        tvToday.setText(current);
+        tvToday.setText("date : " + current);
 
         //리뷰 등록 버튼
         btnRvInsert = (Button)findViewById(R.id.btnRvInsert);
