@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.example.festivalapp.activity.ReviewWriteActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -137,5 +139,10 @@ public class DetailInfoActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.remove(detailInfoMapFragment);
         fragmentTransaction.commit();
+    }
+
+    public void ReviewWriteclick(View view) {
+        Intent intent = new Intent(getApplicationContext(), ReviewWriteActivity.class);
+        startActivity(intent);
     }
 }

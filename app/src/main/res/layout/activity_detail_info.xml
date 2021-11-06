@@ -159,18 +159,20 @@
                         android:textColor="#756A57"
                         android:typeface="serif"
                         android:background="@drawable/layout_titile_underline"/>
+
                     <TextView
+                        android:id="@+id/ReviewWrite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|center_vertical"
                         android:layout_marginRight="28dp"
-                        android:text="write→"
-                        android:textSize="16dp"
-                        android:textColor="#756A57"
-                        android:textAllCaps="false"
-                        android:typeface="serif"
                         android:clickable="true"
-                        />
+                        android:onClick="ReviewWriteclick"
+                        android:text="write→"
+                        android:textAllCaps="false"
+                        android:textColor="#756A57"
+                        android:textSize="16dp"
+                        android:typeface="serif" />
                 </FrameLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

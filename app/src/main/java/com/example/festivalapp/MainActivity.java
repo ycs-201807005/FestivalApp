@@ -21,6 +21,7 @@ import com.example.festivalapp.R;
 import com.example.festivalapp.activity.ConfigActivity;
 import com.example.festivalapp.activity.LoginActivity;
 import com.example.festivalapp.activity.MypageActivity;
+import com.example.festivalapp.activity.ReviewWriteActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -93,17 +94,6 @@ public class MainActivity extends ConfigActivity {
         fragmentTransaction.commit();
         Log.e("실행", "MainActivity:commit()");
 
-//      이미지 갤러리 연결
-        imageview = (ImageView)findViewById(R.id.imageView);
-        imageview.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, gallery_image);
-            }
-        });
-
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -144,15 +134,6 @@ public class MainActivity extends ConfigActivity {
         fragmentTransaction.commitAllowingStateLoss();
         Log.e("실행", "MainActivity:commit()");
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == gallery_image && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
-            Uri selectedImageUri = data.getData();
-            imageview.setImageURI(selectedImageUri);
-
-        }
-
-    }
 }

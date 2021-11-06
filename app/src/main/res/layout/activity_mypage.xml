@@ -122,6 +122,7 @@
             android:typeface="serif"
             android:textColor="#756A57"
             android:stateListAnimator="@null" />
+
         <Button
             android:id="@+id/btnReviews"
             android:layout_width="match_parent"
@@ -129,13 +130,13 @@
             android:layout_marginHorizontal="75dp"
             android:layout_marginVertical="5dp"
             android:background="#00ff0000"
+            android:stateListAnimator="@null"
             android:text="Reviews"
             android:textAllCaps="false"
+            android:textColor="#756A57"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:typeface="serif"
-            android:textColor="#756A57"
-            android:stateListAnimator="@null" />
+            android:typeface="serif" />
         <Button
             android:id="@+id/btnUserDelete"
             android:layout_width="match_parent"
