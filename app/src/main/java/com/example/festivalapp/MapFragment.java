@@ -161,7 +161,7 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
                                 //마커(Marker) 추가
                                 MapPOIItem marker = new MapPOIItem();
                                 marker.setItemName(document.getString("title")); // =title
-                                marker.setTag(Integer.parseInt(Objects.requireNonNull(document.getString("contentid")))); //tag=Cursor의 Row 번호 저장 : " row는 0부터 시작 "
+                                marker.setTag(Integer.parseInt(Objects.requireNonNull(document.getString("contentid"))));
                                 Log.e("실행", "MapFragment:marker.setTag() = " + document.getString("contentid"));
                                 Log.e("실행", "MapFragment:marker.setItemName() = " + document.getString("title"));
                                 Log.e("실행", "MapFragment:marker.mapPoint = " + mapx + ", " + mapy);

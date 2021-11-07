@@ -57,7 +57,6 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.View
             @Override
             public void onClick(View view) {
                 //클릭 시, 축제 상세 정보 페이지로 이동
-                //*조건 - 축제 있을 때!
                 Intent intent = new Intent(activity, DetailInfoActivity.class);
                 intent.putExtra("contentid", mDataset.get(position).getContentid());
                 activity.startActivity(intent);

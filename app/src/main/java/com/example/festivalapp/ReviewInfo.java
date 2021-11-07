@@ -1,22 +1,47 @@
 package com.example.festivalapp;
 
-public class ReviewInfo {
+public class ReviewInfo{
+    private String reviewid;
+    private String writer;
     private String writedate;
-    private String rid;
     private String contentid;
     private String title;
     private String contents;
-    private String eventplace;
-    private String star;
+    private double rating;
 
-    public ReviewInfo(String writedate, String rid, String contentid, String title, String contents, String eventplace, String star){
+    //user for Review Write|Read
+    public ReviewInfo(String writer, String writedate, String contentid, String title, String contents, double rating){
+        this.writer = writer;
         this.writedate = writedate;
-        this.rid = rid;
         this.contentid = contentid;
         this.title = title;
-        this.eventplace = eventplace;
         this.contents =contents;
-        this.star = star;
+        this.rating = rating;
+    }
+
+    //use for User's Review List
+    public ReviewInfo(String reviewid, String writedate, String title, String contents, double rating){
+        this.reviewid = reviewid;
+        this.writedate = writedate;
+        this.title = title;
+        this.contents =contents;
+        this.rating = rating;
+    }
+
+    public String getReviewid() {
+        return reviewid;
+    }
+
+    public void setReviewid(String reviewid) {
+        this.reviewid = reviewid;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
     }
 
     public String getWritedate() {
@@ -27,12 +52,12 @@ public class ReviewInfo {
         this.writedate = writedate;
     }
 
-    public String getStar() {
-        return star;
+    public double getRating() {
+        return rating;
     }
 
-    public void setStar(String star) {
-        this.star = star;
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
     public String getContentid() {
@@ -50,28 +75,15 @@ public class ReviewInfo {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public String getEventplace() {
-        return eventplace;
-    }
-
-    public void setEventplace(String eventplace) {
-        this.eventplace = eventplace;
-    }
-
-    public String getRid() {
-        return rid;
-    }
-
-    public void setRid(String rid) {
-        this.rid = rid;
-    }
-
     public String getContents() {
         return contents;
     }
 
     public void setContents(String contents) {
         this.contents = contents;
+    }
+
+    public int compareTo(ReviewInfo o2) {
+        return this.writedate.compareTo(o2.writedate);
     }
 }

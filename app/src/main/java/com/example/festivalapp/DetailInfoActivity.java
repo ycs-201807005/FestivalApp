@@ -1,29 +1,22 @@
 package com.example.festivalapp;
 
 import android.content.Intent;
-import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.festivalapp.activity.ConfigActivity;
-import com.example.festivalapp.activity.LoginActivity;
-import com.example.festivalapp.activity.MypageActivity;
-import com.example.festivalapp.activity.ReviewWriteActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,8 +30,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-
 public class DetailInfoActivity extends ConfigActivity {
     private static final String TAG = "DetailInfoActivity";
 
@@ -48,6 +39,7 @@ public class DetailInfoActivity extends ConfigActivity {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private DetailInfoMapFragment detailInfoMapFragment;
+    private Bundle bundle;
 
     /* Firebase - 행사 정보 */
     private FirebaseFirestore firestore= FirebaseFirestore.getInstance(); //FirebaseFirestore
@@ -59,6 +51,8 @@ public class DetailInfoActivity extends ConfigActivity {
     private MarkerInfo markerInfo;
     private String contentid;
     private String title="";
+    private String homepageUrl;
+    private double latY,longX;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +64,7 @@ public class DetailInfoActivity extends ConfigActivity {
         bookmarksReference = firestore.collection("users").document(user.getUid()).collection("bookmarks");
 
         /* Bundle - Map Fragment에 좌표 전달 */
-        Bundle bundle = new Bundle();
+        bundle = new Bundle();
 
         /* contentid 가져오기 */
         Intent intent = getIntent();
@@ -81,7 +75,12 @@ public class DetailInfoActivity extends ConfigActivity {
         ImageView imgvImage = (ImageView)findViewById(R.id.imgvImage);
         TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
         TextView tvOverview = (TextView)findViewById(R.id.tvOverview);
-        TextView tvInfoContents = (TextView)findViewById(R.id.tvInfoContents);
+        TextView tvInfoContents1 = (TextView)findViewById(R.id.tvInfoContents1);
+        TextView tvInfoHompage = (TextView)findViewById(R.id.tvInfoHompage); //홈페이지 주소
+        tvInfoHompage.setOnClickListener(onClickListener); //홈페이지 주소 이동
+        TextView tvInfoContents2 = (TextView)findViewById(R.id.tvInfoContents2);
+        Button btnAroundInfo = (Button)findViewById(R.id.btnAroundInfo);
+        btnAroundInfo.setOnClickListener(onClickListener);
         TextView tvMapContents = (TextView)findViewById(R.id.tvMapContents);
         btnBook = (CheckBox)findViewById(R.id.btnBook); //북마크 버튼
         btnBook.setOnClickListener(onClickListener);
@@ -131,35 +130,38 @@ public class DetailInfoActivity extends ConfigActivity {
                         //제목 및 개요
                         title = document.getData().get("title").toString();
                         tvTitle.setText(title);
-                        tvOverview.setText(document.getData().get("overview").toString());
+
+                        tvOverview.setText(Html.fromHtml(document.getData().get("overview").toString()));
 
                         //소개정보
                         String agelimit = document.getData().get("agelimit").toString(); //관람 가능연령
-                        tvInfoContents.setText("[ 관람 가능연령 ]\n " + agelimit);
+                        tvInfoContents1.setText("[ 관람 가능연령 ]\n " + agelimit);
 
                         String eventstartdate = document.getData().get("eventstartdate").toString(); // 시작일
                         String eventenddate = document.getData().get("eventenddate").toString(); // 종료일
                         String playtime = document.getData().get("playtime").toString(); //공연시간
                         String program = document.getData().get("program").toString(); //행사 프로그램
                         String subevent = document.getData().get("subevent").toString(); //부대행사
-                        tvInfoContents.append("\n\n[ 기 간 ]\n " + eventstartdate + " ~ " + eventenddate + "\n");
-                        tvInfoContents.append("\n[ 공연시간 ]\n " + playtime + "\n");
-                        tvInfoContents.append("\n[ 행사 프로그램 ]\n " + program + "\n");
-                        tvInfoContents.append("\n[ 부대행사 ]\n " + subevent);
+                        tvInfoContents1.append("\n\n[ 기 간 ]\n " + eventstartdate + " ~ " + eventenddate + "\n");
+                        tvInfoContents1.append("\n[ 공연시간 ]\n " + playtime + "\n");
+                        tvInfoContents1.append("\n[ 행사 프로그램 ]\n " + Html.fromHtml(program) + "\n");
+                        tvInfoContents1.append("\n[ 부대행사 ]\n " + Html.fromHtml(subevent));
 
                         String usetimefestival = document.getData().get("usetimefestival").toString(); //이용요금
                         String discountinfofestival = document.getData().get("discountinfofestival").toString(); //할인정보
                         String bookingplace = document.getData().get("bookingplace").toString(); //예매처
                         String homepage = document.getData().get("homepage").toString(); //홈페이지
-                        tvInfoContents.append("\n\n[ 이용요금 ]\n " + usetimefestival + "\n");
-                        tvInfoContents.append("\n[ 할인정보 ]\n " + discountinfofestival + "\n");
-                        tvInfoContents.append("\n[ 예매처 ]\n " + bookingplace + "\n");
-                        tvInfoContents.append("\n[ 홈페이지 ]\n " + homepage);
+                        tvInfoContents1.append("\n\n[ 이용요금 ]\n " + Html.fromHtml(usetimefestival) + "\n");
+                        tvInfoContents1.append("\n[ 할인정보 ]\n " + Html.fromHtml(discountinfofestival) + "\n");
+                        tvInfoContents1.append("\n[ 예매처 ]\n " + Html.fromHtml(bookingplace) + "\n");
+                        tvInfoContents1.append("\n[ 홈페이지 ]\n ");
+                        tvInfoHompage.setText(Html.fromHtml(homepage));
+                        homepageUrl = Html.fromHtml(homepage).toString();
 
                         String sponsor1 = document.getData().get("sponsor1").toString(); //주최자
                         String sponsor2 = document.getData().get("sponsor2").toString(); //주관사
-                        tvInfoContents.append("\n\n[ 주최자 ]\n " + sponsor1+ "\n");
-                        tvInfoContents.append("\n[ 주관사 ]\n " + sponsor2);
+                        tvInfoContents2.setText("\n\n[ 주최자 ]\n " + sponsor1+ "\n");
+                        tvInfoContents2.append("\n[ 주관사 ]\n " + sponsor2);
 
                         //위치정보
                         String addr1 = document.getData().get("addr1").toString(); //주소
@@ -168,15 +170,17 @@ public class DetailInfoActivity extends ConfigActivity {
                         String placeinfo = document.getData().get("placeinfo").toString(); //행사 위치 안내
                         tvMapContents.setText("\n[ 주소 ]\n " + addr1 + " " + addr2+ "\n");
                         tvMapContents.append("\n[ 행사 장소 ]\n " + eventplace+ "\n");
-                        tvMapContents.append("\n[ 행사 위치 안내 ]\n " + placeinfo);
+                        tvMapContents.append("\n[ 행사 위치 안내 ]\n " + Html.fromHtml(placeinfo));
 
                         /* MarkerInfo - 북마크용 */
                         markerInfo = new MarkerInfo(contentid, firstimage, title, eventplace);
 
                         /* Bundle */
                         bundle.putString("contentid", contentid);
-                        bundle.putDouble("latY", Double.parseDouble(document.getData().get("mapy").toString()));
-                        bundle.putDouble("longX", Double.parseDouble(document.getData().get("mapx").toString()));
+                        latY=Double.parseDouble(document.getData().get("mapy").toString());
+                        bundle.putDouble("latY", latY);
+                        longX = Double.parseDouble(document.getData().get("mapx").toString());
+                        bundle.putDouble("longX", longX);
                         Log.e(TAG,"query-mapy"+document.getData().get("mapy").toString());
                         Log.e(TAG,"query-mapx"+document.getData().get("mapx").toString());
 
@@ -262,6 +266,19 @@ public class DetailInfoActivity extends ConfigActivity {
                     intent.putExtra("title",title);
                     startActivity(intent);
                     break;
+                case R.id.tvInfoHompage:
+                    Intent intenturl = new Intent(Intent.ACTION_VIEW);
+                    intenturl.setData(Uri.parse(homepageUrl));
+                    startActivity(intenturl);
+                    break;
+                case R.id.btnAroundInfo:
+                    Log.e(TAG,"btnAroundInfo");
+                    //Map Clear
+                    Intent intentAround = new Intent(getApplication(), AroundInfoActivity.class);
+                    intentAround.putExtra("latY",latY);
+                    intentAround.putExtra("longX",longX);
+                    startActivity(intentAround);
+                    break;
             }
         }
     };
@@ -269,9 +286,21 @@ public class DetailInfoActivity extends ConfigActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
+        //Map Clear
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.remove(detailInfoMapFragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        detailInfoMapFragment.setArguments(bundle);
+        Log.e("실행", "MainActivity:mapFragment.setArguments(bundle)");
+        fragmentTransaction.add(R.id.fragmentdetailmap, detailInfoMapFragment);
+        Log.e("실행", "MainActivity:add()");
+        fragmentTransaction.commitAllowingStateLoss();
+        Log.e("실행", "MainActivity:commit()");
     }
 }

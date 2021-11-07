@@ -8,11 +8,16 @@
     android:orientation="vertical"
     tools:context=".ReviewListActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerReviews"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="10dp"/>
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerReviews"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="10dp"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

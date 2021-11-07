@@ -14,15 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FestivalApp">
-        <activity android:name=".BookmarksActivity"/>
-        <activity android:name=".ReviewListActivity"/>
-        <activity android:name=".DetailInfoActivity"/>
-        <activity android:name=".AllFestivalInfoUpdate"/>
-        <activity android:name=".ContentIdListActivity"/>
-        <activity android:name=".GPSActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".activity.ReviewContentActivity" />
-        <activity android:name=".activity.ReviewWriteActivity" />
+        <activity android:name=".ReviewReadActivity"></activity>
+        <activity android:name=".AroundInfoActivity" />
+        <activity android:name=".BookmarksActivity" />
+        <activity android:name=".ReviewListActivity" />
+        <activity android:name=".DetailInfoActivity" />
+        <activity android:name=".AllFestivalInfoUpdate" />
+        <activity android:name=".ContentIdListActivity" />
+        <activity android:name=".GPSActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ReviewWriteActivity" />
         <activity android:name=".activity.MypageActivity" />
         <activity android:name=".activity.SignupActivity" />
         <activity android:name=".activity.LoginActivity">
@@ -35,7 +36,7 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="e06de8b2e101c412ac153c6d1854a177" /><!-- 카카오맵 키 -->
+            android:value="e06de8b2e101c412ac153c6d1854a177" />
     </application>
 
 </manifest>
