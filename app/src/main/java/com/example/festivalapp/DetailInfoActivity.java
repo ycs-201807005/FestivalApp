@@ -143,7 +143,7 @@ public class DetailInfoActivity extends ConfigActivity {
                         String program = document.getData().get("program").toString(); //행사 프로그램
                         String subevent = document.getData().get("subevent").toString(); //부대행사
                         tvInfoContents1.append("\n\n[ 기 간 ]\n " + eventstartdate + " ~ " + eventenddate + "\n");
-                        tvInfoContents1.append("\n[ 공연시간 ]\n " + playtime + "\n");
+                        tvInfoContents1.append("\n[ 공연시간 ]\n " + Html.fromHtml(playtime) + "\n");
                         tvInfoContents1.append("\n[ 행사 프로그램 ]\n " + Html.fromHtml(program) + "\n");
                         tvInfoContents1.append("\n[ 부대행사 ]\n " + Html.fromHtml(subevent));
 
@@ -160,8 +160,8 @@ public class DetailInfoActivity extends ConfigActivity {
 
                         String sponsor1 = document.getData().get("sponsor1").toString(); //주최자
                         String sponsor2 = document.getData().get("sponsor2").toString(); //주관사
-                        tvInfoContents2.setText("\n\n[ 주최자 ]\n " + sponsor1+ "\n");
-                        tvInfoContents2.append("\n[ 주관사 ]\n " + sponsor2);
+                        tvInfoContents2.setText("\n\n[ 주최자 ]\n " + Html.fromHtml(sponsor1)+ "\n");
+                        tvInfoContents2.append("\n[ 주관사 ]\n " + Html.fromHtml(sponsor2));
 
                         //위치정보
                         String addr1 = document.getData().get("addr1").toString(); //주소
@@ -169,7 +169,7 @@ public class DetailInfoActivity extends ConfigActivity {
                         String eventplace = document.getData().get("eventplace").toString(); //행사 장소
                         String placeinfo = document.getData().get("placeinfo").toString(); //행사 위치 안내
                         tvMapContents.setText("\n[ 주소 ]\n " + addr1 + " " + addr2+ "\n");
-                        tvMapContents.append("\n[ 행사 장소 ]\n " + eventplace+ "\n");
+                        tvMapContents.append("\n[ 행사 장소 ]\n " + Html.fromHtml(eventplace) + "\n");
                         tvMapContents.append("\n[ 행사 위치 안내 ]\n " + Html.fromHtml(placeinfo));
 
                         /* MarkerInfo - 북마크용 */

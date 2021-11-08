@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbackground"
+    android:background="@drawable/theme1"
     android:orientation="vertical"
     android:paddingLeft="30dp"
     android:paddingRight="30dp">
@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="50dp">
 
         <!-- 로그인 박스 #RelativeLayout:centerInParent -->
         <LinearLayout
@@ -27,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="LOGIN"
-                android:textColor="#ffffff"
+                android:textColor="#FAA244"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:typeface="serif"
@@ -65,7 +66,7 @@
                     android:textColorHint="#FCCD8E"
                     android:inputType="textEmailAddress"
                     android:textSize="16sp"
-                    android:textColor="#756A57" />
+                    android:textColor="#B4AB9A" />
             </LinearLayout>
 
             <!-- Password 박스 -->
@@ -99,7 +100,7 @@
                     android:inputType="textPassword"
                     android:hint="Password"
                     android:textColorHint="#FCCD8E"
-                    android:textColor="#756A57"
+                    android:textColor="#B4AB9A"
                     android:textSize="16sp"/>
             </LinearLayout>
 
@@ -112,7 +113,7 @@
                 android:layout_marginRight="60dp"
                 android:text="Sign In"
                 android:textAllCaps="false"
-                android:textColor="#FAA244"
+                android:textColor="#FCCD8E"
                 android:textSize="18sp"
                 android:typeface="serif"
                 android:background="@drawable/layout_button_roundcorner" />
@@ -127,7 +128,7 @@
                     android:id="@+id/btnSignUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:text="Sign Up"
                     android:textAllCaps="false"
@@ -162,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvTest"
-                android:text="테스트"
+                android:text=""
                 android:textSize="40sp"
                 android:textAlignment="center">
 

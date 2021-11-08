@@ -102,7 +102,7 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
             Log.e(TAG, "MapFragment:onCreateView()-latY: " + latY);
             mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latY, longX), true);
             // 줌 레벨 변경
-            mapView.setZoomLevel(8, true);
+            mapView.setZoomLevel(7, true);
             Log.e("실행", "MapFragment:setMapCenterPoint()");
             // 줌 인
             mapView.zoomIn(true);
