@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,11 +33,19 @@ public class ReviewReadActivity extends ConfigActivity {
     private static final String TAG = "ReviewReadActivity";
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String Uid;
+
+    TextView btnRvDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_read);
+
+        //삭제버튼 setVisible(t/f)
+        Uid = user.getUid();
+        btnRvDelete = (TextView)findViewById(R.id.btnRvDelete);
 
         Intent intent = getIntent();
         String reviewid = intent.getStringExtra("reviewid");
@@ -49,8 +59,8 @@ public class ReviewReadActivity extends ConfigActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        String title = document.getData().get("title").toString();
                         TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+                        String title = document.getData().get("title").toString();
                         tvTitle.setText(title);
                         double rating = (double) document.getData().get("rating");
                         Log.e(TAG, String.valueOf(rating));
@@ -60,6 +70,10 @@ public class ReviewReadActivity extends ConfigActivity {
                         TextView tvWritedate = (TextView)findViewById(R.id.tvWritedate);
                         tvWritedate.setText(writedate);
                         String writer = document.getData().get("writer").toString();
+                        if(writer.equals(Uid)){
+                            //리뷰 삭제 버튼 보이기
+                            btnRvDelete.setVisibility(View.VISIBLE);
+                        }
                         //사용자 이름 가져오기
                         db.collection("users").document(writer).get()
                                 .addOnCompleteListener((task1) -> {
@@ -87,9 +101,7 @@ public class ReviewReadActivity extends ConfigActivity {
             }
         });
 
-
         /* 리뷰 삭제 하기 */
-        TextView btnRvDelete = (TextView)findViewById(R.id.btnRvDelete);
         btnRvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

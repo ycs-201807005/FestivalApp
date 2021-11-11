@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class AllFestivalInfoUpdate extends ConfigActivity {
-    private static final String TAG = "test_api_list";
+    private static final String TAG = "AllFestivalInfoUpdate";
     private static final int LOAD_SUCCESS = 101;
 
     /* Api 요청 URL 필요 값 */
@@ -204,75 +204,76 @@ public class AllFestivalInfoUpdate extends ConfigActivity {
             @Override
             public void run() {
                 try {
-                    //firestore - events 참조
-                    CollectionReference eventsReference = firestore.collection("events");
-
                     //현재날짜
                     Date currentDate = sdformat.parse(current);
                     Log.e(TAG, "currentDate"+String.valueOf(currentDate));
 
                     //1. Firebase에 저장된 전체 행사 정보들 검사
-                    eventsReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    String docid = document.getId(); //행사 문서 id
-                                    //4.JSONObject {name1:value1,...} = Key-Value 추출 -> EventInfo 객체 만들어서 firestore에 Upload + 조건 : 진행중일것 => (현재날짜 < eventstartdate) 제외
-                                    String eventstartdate = (String) document.get("eventstartdate");
-                                    String eventenddate = (String) document.get("eventenddate");
-                                    try {
-                                        Date evtstartDate = sdformat.parse(eventstartdate);//eventstartdate
-                                        Date evtendDate = sdformat.parse(eventenddate);//eventstartdate
-
-                                        //2.진행 중인 행사 Update
-                                        if(currentDate.compareTo(evtstartDate) >= 0 && currentDate.compareTo(evtendDate) <= 0){
-                                            /* 진행 중인 행사인 경우 : update("running","Y") */
-                                           eventsReference.document(docid).update("running","Y")
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            Log.e(TAG,"진행 중인 행사 Update Success.");
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Log.e(TAG,"진행 중인 행사 Update Fail.");
-                                                            //finish();
-                                                        }
-                                                    });
-                                        } // if end : 현재 진행 중
-                                        else {
-                                            /* 진행 중이 아닌 행사인 경우 : update("running","N") */
-                                            firestore.collection("users").document(docid).update("running","N")
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            Log.e(TAG,"진행 중 아닌 행사 Update Success.");
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Log.e(TAG,"진행 중 아닌 행사 Location:mapx Update Fail.");
-                                                            //finish();
-                                                        }
-                                                    });
-                                        } // else 현재 진행 x end
-
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                        Log.d(TAG, "Error getting date: ", task.getException());
+                    //firestore - events 참조
+                    firestore.collection("events")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            String docid = document.getId(); //행사 문서 id
+                                            //4.JSONObject {name1:value1,...} = Key-Value 추출 -> EventInfo 객체 만들어서 firestore에 Upload + 조건 : 진행중일것 => (현재날짜 < eventstartdate) 제외
+                                            String eventstartdate = (String) document.get("eventstartdate");
+                                            String eventenddate = (String) document.get("eventenddate");
+                                            Log.e(TAG,"eventstartdate-" + eventstartdate);
+                                            Log.e(TAG,"eventenddate-" + eventenddate);
+                                            try {
+                                                Date evtstartDate = sdformat.parse(eventstartdate);//eventstartdate
+                                                Date evtendDate = sdformat.parse(eventenddate);//eventstartdate
+                                                //2.진행 중인 행사 Update
+                                                if(currentDate.compareTo(evtstartDate) >= 0 && currentDate.compareTo(evtendDate) <= 0){
+                                                    Log.e(TAG,"currentDate.compareTo(evtstartDate)-" + currentDate.compareTo(evtstartDate));
+                                                    Log.e(TAG,"currentDate.compareTo(evtendDate)-" + currentDate.compareTo(evtendDate));
+                                                    /* 진행 중인 행사인 경우 : update("running","Y") */
+                                                    firestore.collection("events").document(docid).update("running","Y")
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    Log.e(TAG,"진행 중인 행사 Update Success.");
+                                                                }
+                                                            })
+                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    Log.e(TAG,"진행 중인 행사 Update Fail.");
+                                                                    //finish();
+                                                                }
+                                                            });
+                                                } // if end : 현재 진행 중
+                                                else if (currentDate.compareTo(evtstartDate) < 0 || currentDate.compareTo(evtendDate) > 0) {
+                                                    /* 진행 중이 아닌 행사인 경우 : update("running","N") */
+                                                    firestore.collection("events").document(docid).update("running", "N")
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    Log.e(TAG, "진행 중 아닌 행사 Update Success.");
+                                                                }
+                                                            })
+                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    Log.e(TAG, "진행 중 아닌 행사 Update Fail.");
+                                                                    //finish();
+                                                                }
+                                                            });
+                                                } // else 현재 진행 x end
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                                Log.d(TAG, "Error getting date: ", task.getException());
+                                            }
+                                        }
+                                    } else {
+                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                        finish();
                                     }
                                 }
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
-                                finish();
-                            }
-                        }
-                    });
-
+                            });
                     myhandler.sendEmptyMessage(LOAD_SUCCESS);
                 } catch (Exception e) {
                 }

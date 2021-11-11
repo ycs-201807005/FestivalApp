@@ -86,7 +86,7 @@ public class DetailInfoMapFragment extends Fragment {
             Log.e(TAG, "onCreateView()-latY: " + latY);
             mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latY, longX), true);
             // 줌 레벨 변경
-            mapView.setZoomLevel(4, true);
+            mapView.setZoomLevel(3, true);
             Log.e(TAG, "setMapCenterPoint()");
 
             /* 마커 생성 */
@@ -94,7 +94,7 @@ public class DetailInfoMapFragment extends Fragment {
             MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(latY, longX);
             //마커(Marker) 추가
             MapPOIItem marker = new MapPOIItem();
-            marker.setItemName("title"); // =title
+            marker.setItemName("축제 위치"); // =title
             marker.setTag(Integer.parseInt(contentid));
             marker.setMapPoint(mapPoint);
             marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.

@@ -31,11 +31,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="270dp"
                         android:gravity="center"
-                        android:text=""
+                        android:background="#a6ffffff"
+                        android:text="※ 진행 중이 아닌 축제 입니다."
                         android:textSize="25dp"
                         android:textColor="#FAA244"
                         android:textStyle="bold"
-                        android:typeface="monospace"/>
+                        android:typeface="monospace"
+                        android:visibility="invisible"/>
                     <!--북마크 버튼-->
                     <CheckBox
                         android:id="@+id/btnBook"
@@ -208,10 +210,11 @@
                 </FrameLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
+                    android:id="@+id/recycler_review"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:background="@drawable/beigebackground"
                     overScrollMode="never"/>
             </LinearLayout>
 

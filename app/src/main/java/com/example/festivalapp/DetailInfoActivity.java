@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.festivalapp.activity.ConfigActivity;
@@ -25,10 +27,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class DetailInfoActivity extends ConfigActivity {
     private static final String TAG = "DetailInfoActivity";
@@ -41,18 +48,26 @@ public class DetailInfoActivity extends ConfigActivity {
     private DetailInfoMapFragment detailInfoMapFragment;
     private Bundle bundle;
 
-    /* Firebase - 행사 정보 */
+    /* Firebase */
     private FirebaseFirestore firestore= FirebaseFirestore.getInstance(); //FirebaseFirestore
     private CollectionReference eventsReference;//firestore - events 참조
-    /* Firebase - user의 북마크 정보 */
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private CollectionReference reviewsReference;//firestore - reviews 참조
     private CollectionReference bookmarksReference;//firestore - bookmarks 참조
 
+    /* Firebase - user*/
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+    //행사 정보
     private MarkerInfo markerInfo;
     private String contentid;
     private String title="";
     private String homepageUrl;
     private double latY,longX;
+
+    //리뷰 목록
+    private RecyclerView recycler_review;
+    private ReviewInfo reviewInfo;
+    private ArrayList<ReviewInfo> reviewsList = new ArrayList<ReviewInfo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +75,8 @@ public class DetailInfoActivity extends ConfigActivity {
         setContentView(R.layout.activity_detail_info);
 
         /* Firebase - CollectionReference */
-        eventsReference= firestore.collection("events");
+        eventsReference = firestore.collection("events");
+        reviewsReference= firestore.collection("reviews");
         bookmarksReference = firestore.collection("users").document(user.getUid()).collection("bookmarks");
 
         /* Bundle - Map Fragment에 좌표 전달 */
@@ -82,6 +98,7 @@ public class DetailInfoActivity extends ConfigActivity {
         Button btnAroundInfo = (Button)findViewById(R.id.btnAroundInfo);
         btnAroundInfo.setOnClickListener(onClickListener);
         TextView tvMapContents = (TextView)findViewById(R.id.tvMapContents);
+        recycler_review = (RecyclerView)findViewById(R.id.recycler_review); //리뷰목록
         btnBook = (CheckBox)findViewById(R.id.btnBook); //북마크 버튼
         btnBook.setOnClickListener(onClickListener);
         /* bookmark 여부 확인 */
@@ -110,96 +127,104 @@ public class DetailInfoActivity extends ConfigActivity {
         btnRvWrite = (TextView)findViewById(R.id.btnRvWrite);//리뷰 작성 버튼
         btnRvWrite.setOnClickListener(onClickListener);
 
+        /* reviews 가져오기 */
+        reviewsList.clear();
+        getReviewList();
+
         /* contentid 문서 가져오기 */
-        Query query = eventsReference.whereEqualTo("contentid", contentid);
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    Log.e(TAG, "query.get(): " + task.isSuccessful());
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        /* contentid 필드 값 set */
-                        //대표이미지
-                        String firstimage = document.getData().get("firstimage").toString();
-                        Glide.with(imgvImage).load(firstimage).override(imgvImage.getWidth(), imgvImage.getHeight()).into(imgvImage);
-                        if(document.getData().get("running").toString()=="N"){
-                            TextView imgvText = (TextView)findViewById(R.id.imgvText);
-                            imgvText.setText("※ 진행 중이 아닌 축제 입니다.");
+        eventsReference.whereEqualTo("contentid", contentid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.e(TAG, "query.get(): " + task.isSuccessful());
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                /* contentid 필드 값 set */
+                                //대표이미지
+                                String firstimage = document.getData().get("firstimage").toString();
+                                Glide.with(imgvImage).load(firstimage).override(imgvImage.getWidth(), imgvImage.getHeight()).into(imgvImage);
+                                Log.e(TAG,"running-" + document.getData().get("running").toString());
+                                if(document.getData().get("running").toString().equals("N")){
+                                    TextView imgvText = (TextView)findViewById(R.id.imgvText);
+                                    imgvText.setVisibility(View.VISIBLE);
+                                }
+
+                                //제목 및 개요
+                                title = document.getData().get("title").toString();
+                                tvTitle.setText(title);
+
+                                tvOverview.setText(Html.fromHtml(document.getData().get("overview").toString()));
+
+                                //소개정보
+                                String agelimit = document.getData().get("agelimit").toString(); //관람 가능연령
+                                tvInfoContents1.setText("[ 관람 가능연령 ]\n " + agelimit);
+
+                                String eventstartdate = document.getData().get("eventstartdate").toString(); // 시작일
+                                String eventenddate = document.getData().get("eventenddate").toString(); // 종료일
+                                String playtime = document.getData().get("playtime").toString(); //공연시간
+                                String program = document.getData().get("program").toString(); //행사 프로그램
+                                String subevent = document.getData().get("subevent").toString(); //부대행사
+                                tvInfoContents1.append("\n\n[ 기 간 ]\n " + eventstartdate + " ~ " + eventenddate + "\n");
+                                tvInfoContents1.append("\n[ 공연시간 ]\n " + Html.fromHtml(playtime) + "\n");
+                                tvInfoContents1.append("\n[ 행사 프로그램 ]\n " + Html.fromHtml(program) + "\n");
+                                tvInfoContents1.append("\n[ 부대행사 ]\n " + Html.fromHtml(subevent));
+
+                                String usetimefestival = document.getData().get("usetimefestival").toString(); //이용요금
+                                String discountinfofestival = document.getData().get("discountinfofestival").toString(); //할인정보
+                                String bookingplace = document.getData().get("bookingplace").toString(); //예매처
+                                String homepage = document.getData().get("homepage").toString(); //홈페이지
+                                tvInfoContents1.append("\n\n[ 이용요금 ]\n " + Html.fromHtml(usetimefestival) + "\n");
+                                tvInfoContents1.append("\n[ 할인정보 ]\n " + Html.fromHtml(discountinfofestival) + "\n");
+                                tvInfoContents1.append("\n[ 예매처 ]\n " + Html.fromHtml(bookingplace) + "\n");
+                                tvInfoContents1.append("\n[ 홈페이지 ]\n ");
+                                tvInfoHompage.setText(Html.fromHtml(homepage));
+                                homepageUrl = Html.fromHtml(homepage).toString();
+
+                                String sponsor1 = document.getData().get("sponsor1").toString(); //주최자
+                                String sponsor2 = document.getData().get("sponsor2").toString(); //주관사
+                                tvInfoContents2.setText("\n\n[ 주최자 ]\n " + Html.fromHtml(sponsor1)+ "\n");
+                                tvInfoContents2.append("\n[ 주관사 ]\n " + Html.fromHtml(sponsor2));
+
+                                //위치정보
+                                String addr1 = document.getData().get("addr1").toString(); //주소
+                                String addr2 = document.getData().get("addr2").toString(); //상세주소
+                                String eventplace = document.getData().get("eventplace").toString(); //행사 장소
+                                String placeinfo = document.getData().get("placeinfo").toString(); //행사 위치 안내
+                                tvMapContents.setText("\n[ 주소 ]\n " + addr1 + " " + addr2+ "\n");
+                                tvMapContents.append("\n[ 행사 장소 ]\n " + Html.fromHtml(eventplace) + "\n");
+                                tvMapContents.append("\n[ 행사 위치 안내 ]\n " + Html.fromHtml(placeinfo));
+
+                                /* MarkerInfo - 북마크용 */
+                                markerInfo = new MarkerInfo(contentid, firstimage, title, eventplace);
+
+                                /* Bundle */
+                                bundle.putString("contentid", contentid);
+                                latY=Double.parseDouble(document.getData().get("mapy").toString());
+                                bundle.putDouble("latY", latY);
+                                longX = Double.parseDouble(document.getData().get("mapx").toString());
+                                bundle.putDouble("longX", longX);
+                                Log.e(TAG,"query-mapy"+document.getData().get("mapy").toString());
+                                Log.e(TAG,"query-mapx"+document.getData().get("mapx").toString());
+
+                                Log.e(TAG,"query success");
+                                detailInfoMapFragment = new DetailInfoMapFragment();
+                                detailInfoMapFragment.setArguments(bundle);
+
+                                fragmentManager = getSupportFragmentManager();
+                                fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.fragmentdetailmap, detailInfoMapFragment);
+
+                                fragmentTransaction.commit();
+                                Log.e(TAG,"commit()");
+                            }
+                        } else {
+                            Log.e(TAG,"query failed");
                         }
-
-                        //제목 및 개요
-                        title = document.getData().get("title").toString();
-                        tvTitle.setText(title);
-
-                        tvOverview.setText(Html.fromHtml(document.getData().get("overview").toString()));
-
-                        //소개정보
-                        String agelimit = document.getData().get("agelimit").toString(); //관람 가능연령
-                        tvInfoContents1.setText("[ 관람 가능연령 ]\n " + agelimit);
-
-                        String eventstartdate = document.getData().get("eventstartdate").toString(); // 시작일
-                        String eventenddate = document.getData().get("eventenddate").toString(); // 종료일
-                        String playtime = document.getData().get("playtime").toString(); //공연시간
-                        String program = document.getData().get("program").toString(); //행사 프로그램
-                        String subevent = document.getData().get("subevent").toString(); //부대행사
-                        tvInfoContents1.append("\n\n[ 기 간 ]\n " + eventstartdate + " ~ " + eventenddate + "\n");
-                        tvInfoContents1.append("\n[ 공연시간 ]\n " + Html.fromHtml(playtime) + "\n");
-                        tvInfoContents1.append("\n[ 행사 프로그램 ]\n " + Html.fromHtml(program) + "\n");
-                        tvInfoContents1.append("\n[ 부대행사 ]\n " + Html.fromHtml(subevent));
-
-                        String usetimefestival = document.getData().get("usetimefestival").toString(); //이용요금
-                        String discountinfofestival = document.getData().get("discountinfofestival").toString(); //할인정보
-                        String bookingplace = document.getData().get("bookingplace").toString(); //예매처
-                        String homepage = document.getData().get("homepage").toString(); //홈페이지
-                        tvInfoContents1.append("\n\n[ 이용요금 ]\n " + Html.fromHtml(usetimefestival) + "\n");
-                        tvInfoContents1.append("\n[ 할인정보 ]\n " + Html.fromHtml(discountinfofestival) + "\n");
-                        tvInfoContents1.append("\n[ 예매처 ]\n " + Html.fromHtml(bookingplace) + "\n");
-                        tvInfoContents1.append("\n[ 홈페이지 ]\n ");
-                        tvInfoHompage.setText(Html.fromHtml(homepage));
-                        homepageUrl = Html.fromHtml(homepage).toString();
-
-                        String sponsor1 = document.getData().get("sponsor1").toString(); //주최자
-                        String sponsor2 = document.getData().get("sponsor2").toString(); //주관사
-                        tvInfoContents2.setText("\n\n[ 주최자 ]\n " + Html.fromHtml(sponsor1)+ "\n");
-                        tvInfoContents2.append("\n[ 주관사 ]\n " + Html.fromHtml(sponsor2));
-
-                        //위치정보
-                        String addr1 = document.getData().get("addr1").toString(); //주소
-                        String addr2 = document.getData().get("addr2").toString(); //상세주소
-                        String eventplace = document.getData().get("eventplace").toString(); //행사 장소
-                        String placeinfo = document.getData().get("placeinfo").toString(); //행사 위치 안내
-                        tvMapContents.setText("\n[ 주소 ]\n " + addr1 + " " + addr2+ "\n");
-                        tvMapContents.append("\n[ 행사 장소 ]\n " + Html.fromHtml(eventplace) + "\n");
-                        tvMapContents.append("\n[ 행사 위치 안내 ]\n " + Html.fromHtml(placeinfo));
-
-                        /* MarkerInfo - 북마크용 */
-                        markerInfo = new MarkerInfo(contentid, firstimage, title, eventplace);
-
-                        /* Bundle */
-                        bundle.putString("contentid", contentid);
-                        latY=Double.parseDouble(document.getData().get("mapy").toString());
-                        bundle.putDouble("latY", latY);
-                        longX = Double.parseDouble(document.getData().get("mapx").toString());
-                        bundle.putDouble("longX", longX);
-                        Log.e(TAG,"query-mapy"+document.getData().get("mapy").toString());
-                        Log.e(TAG,"query-mapx"+document.getData().get("mapx").toString());
-
-                        Log.e(TAG,"query success");
-                        detailInfoMapFragment = new DetailInfoMapFragment();
-                        detailInfoMapFragment.setArguments(bundle);
-
-                        fragmentManager = getSupportFragmentManager();
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.fragmentdetailmap, detailInfoMapFragment);
-
-                        fragmentTransaction.commit();
-                        Log.e(TAG,"commit()");
                     }
-                } else {
-                    Log.e(TAG,"query failed");
-                }
-            }
         });
+
+
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -290,6 +315,8 @@ public class DetailInfoActivity extends ConfigActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.remove(detailInfoMapFragment);
         fragmentTransaction.commit();
+
+        reviewsList.clear();
     }
 
     @Override
@@ -302,5 +329,50 @@ public class DetailInfoActivity extends ConfigActivity {
         Log.e("실행", "MainActivity:add()");
         fragmentTransaction.commitAllowingStateLoss();
         Log.e("실행", "MainActivity:commit()");
+
+        /* reviews 가져오기 */
+        getReviewList();
+    }
+
+    //리뷰 리스트 정렬
+    Comparator<ReviewInfo> cmpAsc = new Comparator<ReviewInfo>() {
+        @Override
+        public int compare(ReviewInfo o1, ReviewInfo o2) {
+            return o1.compareTo(o2) ;
+        }
+    };
+
+    private void getReviewList(){
+        reviewsReference.whereEqualTo("contentid", contentid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.e(TAG, "query.get(): " + task.isSuccessful());
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String reviewid = document.getId(); //Review Doc Id
+                                Log.e(TAG, "reviewid: " + reviewid);
+                                String writedate = document.getData().get("writedate").toString();
+                                //String title = document.getData().get("title").toString(); => wrtiername
+                                String writer = document.getData().get("writer").toString();
+                                String contents = document.getData().get("contents").toString();
+                                double rating = (double) document.getData().get("rating");
+                                reviewInfo = new ReviewInfo(reviewid, writedate,writer,contents,rating);
+                                reviewsList.add(reviewInfo);
+                            }
+                            if(reviewsList.size()!=0){
+                                Collections.sort(reviewsList, cmpAsc); //sort
+                                Log.e(TAG, "reviewsList: " + reviewsList.get(0).getReviewid());
+                                recycler_review.setLayoutManager(new LinearLayoutManager(DetailInfoActivity.this));
+                                RecyclerView.Adapter mAdapter = new DetailReviewsAdapter(DetailInfoActivity.this, reviewsList);
+                                recycler_review.setAdapter(mAdapter);
+                            }
+
+                        } else {
+                            Log.e(TAG,"query failed");
+                        }
+                    }
+                });
     }
 }

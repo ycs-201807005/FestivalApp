@@ -17,13 +17,15 @@
         android:id="@+id/btnAllInsert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="All Data Insert" />
+        android:text="All Data Insert"
+        android:clickable="false"/>
 
     <Button
         android:id="@+id/btnAllDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="All Data Delete"/>
+        android:text="All Data Delete"
+        android:clickable="false"/>
 
     <Button
         android:id="@+id/btnMngLogout"

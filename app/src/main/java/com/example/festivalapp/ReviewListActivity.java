@@ -48,7 +48,7 @@ public class ReviewListActivity extends ConfigActivity {
             @Override
             public void onRefresh() {
                 /* swipe 시 진행할 동작 */
-                getReviewLists();
+                getReviewList();
                 /* 업데이트가 끝났음을 알림 */
                 refresh_layout.setRefreshing(false);
             }
@@ -57,7 +57,7 @@ public class ReviewListActivity extends ConfigActivity {
         //writer
         writer = user.getUid();
 
-        getReviewLists();
+        getReviewList();
 
     }
 
@@ -68,7 +68,15 @@ public class ReviewListActivity extends ConfigActivity {
         }
     };
 
-    private void getReviewLists(){
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        /* reviews 가져오기 */
+        getReviewList();
+    }
+
+    private void getReviewList(){
         reviewsList.clear();
         /* 사용자가 작성한 리뷰 리스트 가져오기 */
         db.collection("reviews").whereEqualTo("writer", writer)
@@ -88,11 +96,14 @@ public class ReviewListActivity extends ConfigActivity {
                                 reviewsList.add(reviewInfo);
                             }
 
-                            Collections.sort(reviewsList, cmpAsc) ;
+                            if(reviewsList.size()!=0){
+                                Collections.sort(reviewsList, cmpAsc); //sort
 
-                            recyclerView.setLayoutManager(new LinearLayoutManager(ReviewListActivity.this));
-                            RecyclerView.Adapter mAdapter = new ReviewListAdapter(ReviewListActivity.this, reviewsList);
-                            recyclerView.setAdapter(mAdapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(ReviewListActivity.this));
+                                RecyclerView.Adapter mAdapter = new ReviewListAdapter(ReviewListActivity.this, reviewsList);
+                                recyclerView.setAdapter(mAdapter);
+                            }
+
                         } else {
                             //task fail
                         }
