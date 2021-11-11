@@ -9,7 +9,19 @@ public class ReviewInfo{
     private String contents;
     private double rating;
 
-    //user for Review Write|Read
+    //use for Review Read
+    //use for User's Review List - title
+    public ReviewInfo(String reviewid, String writer, String writedate, String contentid, String title, String contents, double rating){
+        this.reviewid = reviewid;
+        this.writer = writer;
+        this.writedate = writedate;
+        this.contentid = contentid;
+        this.title = title;
+        this.contents =contents;
+        this.rating = rating;
+    }
+
+    //use for Review Write
     public ReviewInfo(String writer, String writedate, String contentid, String title, String contents, double rating){
         this.writer = writer;
         this.writedate = writedate;
@@ -19,11 +31,11 @@ public class ReviewInfo{
         this.rating = rating;
     }
 
-    //use for User's Review List
-    public ReviewInfo(String reviewid, String writedate, String title, String contents, double rating){
+    //use for Datail's Review List - writer
+    public ReviewInfo(String reviewid, String writedate, String writer, String contents, double rating){
         this.reviewid = reviewid;
         this.writedate = writedate;
-        this.title = title;
+        this.writer = writer;
         this.contents =contents;
         this.rating = rating;
     }

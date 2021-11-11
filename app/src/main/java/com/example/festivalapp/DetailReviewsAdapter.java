@@ -85,7 +85,7 @@ public class DetailReviewsAdapter extends RecyclerView.Adapter<DetailReviewsAdap
         //festival_writername
         /* 사용자 이름 가져오기 */
         TextView tvWritername = cardView.findViewById(R.id.tvWritername);
-        firestore.collection("users").document(mDataset.get(position).getTitle()).get()
+        firestore.collection("users").document(mDataset.get(position).getWriter()).get()
                 .addOnCompleteListener((task) -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();

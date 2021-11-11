@@ -93,9 +93,13 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder> 
         TextView tvTitle = cardView.findViewById(R.id.tvTitle);
         tvTitle.setText(mDataset.get(position).getTitle());
 
-        TextView tvEventstartdate = cardView.findViewById(R.id.tvEventdate);
-        String eventdate = mDataset.get(position).getEventstartdate() + " ~ " + mDataset.get(position).getEventenddate();
-        tvEventstartdate.setText(eventdate);
+        TextView tvEventdate = cardView.findViewById(R.id.tvEventdate);
+        String eventstartdate = mDataset.get(position).getEventstartdate();
+        String eventenddate = mDataset.get(position).getEventenddate();
+        eventstartdate = eventstartdate.substring(0,4) + "년 " + eventstartdate.substring(4,6) + "월 " + eventstartdate.substring(6,8) + "일";
+        eventenddate = eventenddate.substring(0,4) + "년 " + eventenddate.substring(4,6) + "월 " + eventenddate.substring(6,8) + "일";
+        String eventdate = eventstartdate + " ~ " + eventenddate;
+        tvEventdate.setText(eventdate);
 
         TextView tvEventplace = cardView.findViewById(R.id.tvEventplace);
         tvEventplace.setText(mDataset.get(position).getEventplace());

@@ -66,6 +66,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
                 //클릭 시, Review Read
                 Intent intent = new Intent(activity, ReviewReadActivity.class);
                 intent.putExtra("reviewid", mDataset.get(position).getReviewid());
+                intent.putExtra("contentid", mDataset.get(position).getContentid());
                 activity.startActivity(intent);
             }
         });

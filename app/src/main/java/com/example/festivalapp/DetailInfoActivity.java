@@ -161,7 +161,9 @@ public class DetailInfoActivity extends ConfigActivity {
                                 tvInfoContents1.setText("[ 관람 가능연령 ]\n " + agelimit);
 
                                 String eventstartdate = document.getData().get("eventstartdate").toString(); // 시작일
+                                eventstartdate = eventstartdate.substring(0,4) + "년 " + eventstartdate.substring(4,6) + "월 " + eventstartdate.substring(6,8) + "일";
                                 String eventenddate = document.getData().get("eventenddate").toString(); // 종료일
+                                eventenddate = eventenddate.substring(0,4) + "년 " + eventenddate.substring(4,6) + "월 " + eventenddate.substring(6,8) + "일";
                                 String playtime = document.getData().get("playtime").toString(); //공연시간
                                 String program = document.getData().get("program").toString(); //행사 프로그램
                                 String subevent = document.getData().get("subevent").toString(); //부대행사

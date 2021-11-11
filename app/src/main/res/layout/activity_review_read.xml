@@ -29,7 +29,8 @@
         android:text="2021 축제 이름"
         android:textColor="#756A57"
         android:textSize="30dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:clickable="true"/>
 
     <RatingBar
         android:id="@+id/ratingBar"

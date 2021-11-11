@@ -95,6 +95,7 @@ public class FestivalDialogFragment extends DialogFragment {
                         String eventenddate = (String) document.get("eventenddate");
                         String eventplace = (String) document.get("eventplace");
 
+
                         //이미지
                         ImageView imgvImage = view.findViewById(R.id.imgvImage);
                         Glide.with(view).load(firstimage).override(view.getWidth(), view.getHeight()).into(imgvImage);
@@ -102,6 +103,8 @@ public class FestivalDialogFragment extends DialogFragment {
                         TextView tvTitle = view.findViewById(R.id.tvTitle);
                         tvTitle.setText(title);
                         //기간
+                        eventstartdate = eventstartdate.substring(0,4) + "년 " + eventstartdate.substring(4,6) + "월 " + eventstartdate.substring(6,8) + "일";
+                        eventenddate = eventenddate.substring(0,4) + "년 " + eventenddate.substring(4,6) + "월 " + eventenddate.substring(6,8) + "일";
                         TextView tvEventdate = view.findViewById(R.id.tvEventdate);
                         tvEventdate.setText(eventstartdate + " ~ " + eventenddate);
                         //장소

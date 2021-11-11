@@ -36,7 +36,7 @@ public class ReviewReadActivity extends ConfigActivity {
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String Uid;
 
-    TextView btnRvDelete;
+    TextView btnRvDelete, tvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,22 @@ public class ReviewReadActivity extends ConfigActivity {
         String reviewid = intent.getStringExtra("reviewid");
         Log.e(TAG,reviewid);
 
+        // title - 상세 정보 이동
+        tvTitle = (TextView)findViewById(R.id.tvTitle);
+        String contentid = intent.getStringExtra("contentid");
+        if(contentid!=null){
+            Log.e(TAG,contentid);
+            tvTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent1 = new Intent(ReviewReadActivity.this, DetailInfoActivity.class);
+                    intent1.putExtra("contentid", contentid);
+                    startActivity(intent1);
+                    finish();
+                }
+            });
+        }
+
         /* 선택한 리뷰 내용 가져오기 */
         DocumentReference docRef = db.collection("reviews").document(reviewid);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -59,7 +75,6 @@ public class ReviewReadActivity extends ConfigActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
                         String title = document.getData().get("title").toString();
                         tvTitle.setText(title);
                         double rating = (double) document.getData().get("rating");
