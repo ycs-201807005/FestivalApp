@@ -53,6 +53,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends ConfigActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -73,8 +74,9 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
     private MapFragment mapFragment;
 
     //Data-Bundle
-    private Bundle bundle;
+    private Bundle bundle, bundle1;
     private ArrayList<String> contentIdList;
+    private ArrayList<HashMap<String, String>> mapList;
     private double latY; //사용자 위치 : y좌표 = 위도 = longitude
     private double longX; //사용자 위치 : x좌표 = 경도 = latitude
 
@@ -133,11 +135,11 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //입력 주소로 좌표 구함
-                Location location = findGeoPoint(getApplicationContext(), query);
+                Location location = findGeoPoint(getApplicationContext(), query); //Location findGeoPoint()
                 Log.e(TAG,"("+ location.getLatitude() + "," + location.getLongitude() + ")"); //(latY,longX)=(37,126)
                 //주소 구함
                 List<Address> address=null;
-                String addr = "";
+                String addr = "주소를 찾을 수 없습니다.";
                 Geocoder g = new Geocoder(getApplicationContext());
                 try {
                     address = g.getFromLocation(location.getLatitude(),location.getLongitude(),10); //(latY,longX)=(37,126)
@@ -145,7 +147,6 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
                     Log.e(TAG, "[현재위치] 주소 = " + addr);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    addr = "주소를 찾을 수 없습니다.";
                 }
                 finally {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -153,15 +154,33 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
                     builder.setMessage("현재 위치가 설정됩니다.\n현재 주소 : " + addr);
                     builder.setCancelable(true);
                     String finalAddr = addr;
-                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            Log.e(TAG,"showDialogForLocationSave() - 확인");
-                            /* 현재 사용자 위치 저장 */
-                            saveLocation(location.getLatitude(), location.getLongitude(), finalAddr); //(latY,longX)=(37,126)
-                        }
-                    });
-                    builder.show();
+                    if(finalAddr.equals("주소를 찾을 수 없습니다.")){
+                        builder.setMessage(addr + "\n※ 올바른 주소를 입력해주세요.");
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                Log.e(TAG,"showDialogForLocationSave() - 확인");
+                            }
+                        });
+                    }
+                    else {
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                Log.e(TAG,"showDialogForLocationSave() - 확인");
+                                /* 현재 사용자 위치 저장 */
+                                saveLocation(location.getLatitude(), location.getLongitude(), finalAddr); //(latY,longX)=(37,126)
+                            }
+                        });
+                        builder.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                Log.e(TAG,"showDialogForLocationSave() - 취소");
+                            }
+                        });
+                    }
+
+                    builder.show(); //AlertDialog.Builder
 
                     return true;
                 }
@@ -201,6 +220,11 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
         bundle.putDouble("longX",longX);
         bundle.putDouble("latY",latY);
 
+        bundle1 = new Bundle();
+        mapList = new ArrayList<HashMap<String, String>>();
+        mapList = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("mapList");
+        bundle1.putSerializable("mapList",mapList);
+
         //mapFragment
         mapFragment = new MapFragment();
         mapFragment.setArguments(bundle);
@@ -210,7 +234,7 @@ public class MainActivity extends ConfigActivity implements NavigationView.OnNav
 
         //ListFragment
         ListFragment listFragment = new ListFragment();
-        listFragment.setArguments(bundle);
+        listFragment.setArguments(bundle1);
         Log.e("실행", "MainActivity:listFragment.setArguments(bundle)");
         fragmentTransaction.replace(R.id.fragmentlist, listFragment);
         Log.e("실행", "MainActivity:add()");

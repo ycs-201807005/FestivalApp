@@ -1,7 +1,6 @@
 package com.example.festivalapp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +11,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.festivalapp.FirebaseFuncs;
-import com.example.festivalapp.R;
-import com.example.festivalapp.ReviewInfo;
 import com.example.festivalapp.activity.ConfigActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,7 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

@@ -35,18 +35,23 @@ import net.daum.mf.map.api.MapView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class ListFragment extends Fragment {
     private static final String TAG = "ListFragment";
 
     private Bundle bundle;
-    private ArrayList<String> contentIdList= new ArrayList<String>();
+    //private ArrayList<String> contentIdList= new ArrayList<String>();
 
     private RecyclerView recyclerView;
     private ArrayList<FestivalInfo> festivalsList = new ArrayList<FestivalInfo>();
     private FirebaseFirestore firestore= FirebaseFirestore.getInstance(); //FirebaseFirestore
     private CollectionReference eventsReference= firestore.collection("events");//firestore - events 참조
+
+    private ArrayList<HashMap<String, String>> mapList = new ArrayList<HashMap<String, String>>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,9 +60,11 @@ public class ListFragment extends Fragment {
         bundle = getArguments();
         if (bundle != null) {
             Log.e(TAG, "bundle!=null");
-            contentIdList = bundle.getStringArrayList("contentIdList");
-            Log.e(TAG, "contentIdList.size()=" + contentIdList.size());
-
+            //contentIdList = bundle.getStringArrayList("contentIdList");
+            //Log.e(TAG, "contentIdList.size()=" + contentIdList.size());
+            mapList = (ArrayList<HashMap<String, String>>) bundle.getSerializable("mapList");
+            String first = mapList.get(0).get("contentid");
+            Log.e(TAG,first);
         }
 
 
@@ -77,14 +84,22 @@ public class ListFragment extends Fragment {
 
         /*데이터 가져오기*/
         if (bundle != null) {
-            /* contentIdList.add("주변에서 진행 중인 축제가 없습니다."); 처리 필요 */
+            /* contentIdList.add("주변에서 진행 중인 축제가 없습니다."); 처리 필요
             if (contentIdList.get(0).equals("주변에서 진행 중인 축제가 없습니다.")) {
+                Log.e(TAG, "주변에서 진행 중인 축제가 없습니다.");
+            }*/
+            String first = mapList.get(0).get("contentid");
+            Log.e(TAG,first);
+            if (first.equals("주변에서 진행 중인 축제가 없습니다.")) {
                 Log.e(TAG, "주변에서 진행 중인 축제가 없습니다.");
             }
             else {
-                for (int i = 0; i < contentIdList.size(); i++) {
-                    Log.e("실행", contentIdList.get(i));
-                    String contentid = contentIdList.get(i);
+                for (int i = 0; i < mapList.size(); i++) {
+                    //Log.e(TAG, contentIdList.get(i));
+                    //String contentid = contentIdList.get(i);
+                    String contentid = mapList.get(i).get("contentid");
+                    String dist =  mapList.get(i).get("dist");
+                    int d = Integer.parseInt(dist);
                     Query query = eventsReference.whereEqualTo("contentid", contentid);
                     query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -96,22 +111,31 @@ public class ListFragment extends Fragment {
                                     String eventstartdate = (String) document.get("eventstartdate");
                                     String eventenddate = (String) document.get("eventenddate");
                                     String eventplace = (String) document.get("eventplace");
-                                    festivalsList.add(new FestivalInfo(contentid, firstimage, title, eventstartdate, eventenddate, eventplace));
+                                    //festivalsList.add(new FestivalInfo(contentid, firstimage, title, eventstartdate, eventenddate, eventplace));
+                                    Log.e(TAG,contentid + " " + dist + " " + firstimage + " " + title + " " + eventstartdate + eventenddate + eventplace);
+                                    festivalsList.add(new FestivalInfo(contentid, d, firstimage, title, eventstartdate, eventenddate, eventplace));
                                     Log.e(TAG, "festivalsList 추가 contentid - " + contentid);
                                 }
                             } else {
                                 Log.e(TAG, "query - task failed");
                             }
 
-                            if (contentid == contentIdList.get(contentIdList.size() - 1)) {
-                                Log.e(TAG, String.valueOf(festivalsList.size()));
-                                ListsAdapter adapter = new ListsAdapter(getActivity(), festivalsList);
-                                recyclerView.setAdapter(adapter);
-                                Log.e(TAG, "recyclerView.setAdapter(adapter)");
-                            }
+                            Log.e(TAG, "festivalsList -- 추가 --");
+                            Collections.sort(festivalsList, cmpAsc); //sort
+                            ListsAdapter adapter = new ListsAdapter(getActivity(), festivalsList);
+                            recyclerView.setAdapter(adapter);
+                            Log.e(TAG, "recyclerView.setAdapter(adapter)");
+                            Log.e(TAG, "festivalsList.size() --" + String.valueOf(festivalsList.size()) + "--");
                         }
                     });
                 }
+                /*
+                    Collections.sort(festivalsList, cmpAsc); //sort
+                    Log.e(TAG, "festivalsList.size()-" + String.valueOf(festivalsList.size()));
+                    for(int i=0; i<festivalsList.size(); i++){
+                        Log.e(TAG, " index-" + i + " title-" + festivalsList.get(i).getTitle() + " dist-" + festivalsList.get(i).getDist());
+                    }
+                */
             }
 
         }
@@ -119,4 +143,10 @@ public class ListFragment extends Fragment {
         return view;
     }
 
+    Comparator<FestivalInfo> cmpAsc = new Comparator<FestivalInfo>() {
+        @Override
+        public int compare(FestivalInfo o1, FestivalInfo o2) {
+            return o1.compareTo(o2) ;
+        }
+    };
 }

@@ -2,6 +2,7 @@ package com.example.festivalapp;
 
 public class FestivalInfo {
     private String contentid;
+    private int dist;
     private String image;
     private String title;
     private String eventstartdate;
@@ -15,6 +16,24 @@ public class FestivalInfo {
         this.eventstartdate=eventstartdate;
         this.eventenddate=eventenddate;
         this.eventplace=eventplace;
+    }
+
+    public FestivalInfo(String contentid, int dist, String image, String title, String eventstartdate, String eventenddate, String eventplace){
+        this.contentid = contentid;
+        this.dist = dist;
+        this.image = image;
+        this.title = title;
+        this.eventstartdate=eventstartdate;
+        this.eventenddate=eventenddate;
+        this.eventplace=eventplace;
+    }
+
+    public int getDist() {
+        return dist;
+    }
+
+    public void setDist(int dist) {
+        this.dist = dist;
     }
 
     public String getContentid() {
@@ -63,5 +82,11 @@ public class FestivalInfo {
 
     public void setEventplace(String eventplace) {
         this.eventplace = eventplace;
+    }
+
+    public int compareTo(FestivalInfo o2) {
+        if(this.dist>o2.dist) return 1;
+        else if (this.dist<o2.dist) return -1;
+        else return 0;
     }
 }

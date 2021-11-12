@@ -37,18 +37,34 @@
                 android:textStyle="bold"
                 android:typeface="serif"/>
 
-            <TextView
-                android:id="@+id/tvEventdate"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
-                android:text="tvEventstartdate~tvEventenddate"
-                android:textColor="#756A57"
-                android:typeface="serif"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvEventdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="tvEventstartdate~tvEventenddate"
+                    android:textColor="#756A57"
+                    android:typeface="serif"/>
+
+                <TextView
+                    android:id="@+id/tvDist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:padding="3dp"
+                    android:text="+100m"
+                    android:textColor="#756A57"
+                    android:typeface="serif"/>
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/tvEventplace"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="tvEventplace"

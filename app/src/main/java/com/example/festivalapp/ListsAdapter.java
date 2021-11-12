@@ -31,6 +31,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder> {
+    private static final String TAG = "ListsAdapter";
+
     private ArrayList<FestivalInfo> mDataset;
     private Activity activity;
     private MainActivity mainActivity;
@@ -45,6 +47,7 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder> 
     }
 
     public ListsAdapter(Activity activity, ArrayList<FestivalInfo> myDataset) {
+        Log.e(TAG, "ListsAdapter()");
         mDataset = myDataset;
         this.activity = activity;
         mainActivity = (MainActivity) activity;
@@ -61,6 +64,7 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder> 
 
             }
         });
+        Log.e(TAG, "onCreateViewHolder()");
         return ViewHolder;
     }
 
@@ -104,6 +108,11 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder> 
         TextView tvEventplace = cardView.findViewById(R.id.tvEventplace);
         tvEventplace.setText(mDataset.get(position).getEventplace());
 
+        TextView tvDist = cardView.findViewById(R.id.tvDist);
+        float distkm = (float)mDataset.get(position).getDist() / 1000;
+        tvDist.setText("+" + distkm + "km");
+
+        Log.e(TAG,"position-"+ position + "title-"+ mDataset.get(position).getTitle() + " dist-" + mDataset.get(position).getDist());
     }
 
     @Override

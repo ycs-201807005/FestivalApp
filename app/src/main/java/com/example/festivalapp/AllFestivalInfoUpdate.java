@@ -348,7 +348,7 @@ public class AllFestivalInfoUpdate extends ConfigActivity {
                     for (int i = 0; i < eventInfoArray.length(); i++) {
                         /* EventsInfo 작성 */
                         Eventinfo eventinfo;
-                        EndEventinfo endEventinfo;
+                        //EndEventinfo endEventinfo;
                         ArrayList<String> values = new ArrayList<String>();
 
                         //3.JSONObject {},{} = item 추출

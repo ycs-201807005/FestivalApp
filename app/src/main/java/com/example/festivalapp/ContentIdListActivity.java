@@ -34,6 +34,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ContentIdListActivity extends ConfigActivity {
     private static final String TAG = "ContentIdListActivity";
@@ -69,6 +70,7 @@ public class ContentIdListActivity extends ConfigActivity {
     private CollectionReference eventsReference;//firestore - events 참조
 
     private ArrayList<String> storecontentIds = new ArrayList<String>(); //파베에 저장되어 있는 현재 진행 중인 행사 id 목록
+    private ArrayList<HashMap<String, String>> mapList = new ArrayList<HashMap<String, String>>();
 
     /**/
     @Override
@@ -219,23 +221,42 @@ public class ContentIdListActivity extends ConfigActivity {
                                 contentIdList.add(contentid);
                                 Log.e(TAG, "MapFragment:marker-contentid: " + contentid);
                                 Log.e(TAG, "MapFragment:marker-contentIdList: " + contentIdList.size());
+
+                                String dist = Object.getString("dist");
+                                HashMap<String, String> hashMap = new HashMap<String, String>();
+                                hashMap.put("contentid", contentid);
+                                hashMap.put("dist", dist);
+                                mapList.add(hashMap);
+
                             }
                         }
                         if (contentIdList.size()==0){
                             contentIdList.add("주변에서 진행 중인 축제가 없습니다.");
                             Log.e(TAG,"주변에서 진행 중인 축제가 없습니다.");
+                            HashMap<String, String> hashMap = new HashMap<String, String>();
+                            hashMap.put("contentid", "주변에서 진행 중인 축제가 없습니다.");
+                            hashMap.put("dist", "0");
+                            mapList.add(hashMap);
                         }
                         myhandler.sendEmptyMessage(LOAD_SUCCESS);
                     }
                     else {
                         contentIdList.add("주변에서 진행 중인 축제가 없습니다.");
                         Log.e(TAG,"주변에서 진행 중인 축제가 없습니다.");
+                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("contentid", "주변에서 진행 중인 축제가 없습니다.");
+                        hashMap.put("dist", "0");
+                        mapList.add(hashMap);
                         myhandler.sendEmptyMessage(LOAD_SUCCESS);
                     }
 
                 } catch (Exception e) {
                     contentIdList.add("주변에서 진행 중인 축제가 없습니다.");
                     Log.e(TAG,"API - 위치기반 조회 실패");
+                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                    hashMap.put("contentid", "주변에서 진행 중인 축제가 없습니다.");
+                    hashMap.put("dist", "0");
+                    mapList.add(hashMap);
                     myhandler.sendEmptyMessage(LOAD_SUCCESS);
                 }
 
@@ -251,6 +272,7 @@ public class ContentIdListActivity extends ConfigActivity {
         intent.putExtra("contentIdList",contentIdList);
         intent.putExtra("longX",longX);
         intent.putExtra("latY",latY );
+        intent.putExtra("mapList",mapList );
         startActivity(intent);//실행
         finish();
     }

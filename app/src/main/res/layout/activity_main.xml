@@ -49,7 +49,7 @@
             android:background="@drawable/layout_orange_topround15"
             android:paddingLeft="20dp"
             android:paddingBottom="20dp"
-            android:text="▼ 진행 중인 주변 축제"
+            android:text="▼ 진행 중인 주변 축제 (거리순)"
             android:textSize="23dp"
             android:textColor="#ffffff"
             android:textStyle="bold"
