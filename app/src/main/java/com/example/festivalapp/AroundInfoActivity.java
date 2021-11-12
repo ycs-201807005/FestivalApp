@@ -1,11 +1,18 @@
 package com.example.festivalapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.TabHost;
 
 import com.example.festivalapp.activity.ConfigActivity;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -16,73 +23,77 @@ import net.daum.mf.map.api.MapView;
 
 import java.util.Objects;
 
-public class AroundInfoActivity extends ConfigActivity implements MapView.POIItemEventListener{
-    private MapView mapView;
-    private ViewGroup mapViewContainer;
+public class AroundInfoActivity extends ConfigActivity {
+    private static final String TAG = "AroundInfoActivity";
+
+    private TabLayout tabs;
+
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
+    private WifiFragment wifiFragment;
+    private ToiletFragment toiletFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_around_info);
 
-        mapView = new MapView(this);
+        //intent
+        Intent intent = getIntent();
+        double latY = intent.getDoubleExtra("latY",0.0);
+        double longX = intent.getDoubleExtra("longX",0.0);
+        //bundle
+        Bundle bundle = new Bundle();
+        bundle.putDouble("longX",longX);
+        bundle.putDouble("latY",latY);
 
-        mapViewContainer = (ViewGroup) findViewById(R.id.tab1);
-        mapViewContainer.addView(mapView);
+        //fragment
+        wifiFragment = new WifiFragment();
+        toiletFragment = new ToiletFragment();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
 
-        mapView.setPOIItemEventListener(this);
+        wifiFragment.setArguments(bundle);
+        fragmentTransaction.add(R.id.container, wifiFragment);
 
-        // 중심점 변경
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(/*latY, longX*/37.53737528, 127.00557633), true);
+        //tab
+        tabs = findViewById(R.id.tabs);
+        tabs.addTab(tabs.newTab().setText("Public Wifi"));
+        tabs.addTab(tabs.newTab().setText("Public Toilet"));
+        tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                Fragment selected = null;
+                if(position == 0) {
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.remove(toiletFragment);
+                    fragmentTransaction.commit();
+                    selected = wifiFragment;
+                }
+                else if(position == 1) {
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.remove(wifiFragment);
+                    fragmentTransaction.commit();
+                    selected = toiletFragment;
+                }
+                selected.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
+            }
 
-        // 줌 레벨 변경
-        mapView.setZoomLevel(2, true);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-        // 줌 인
-        mapView.zoomIn(true);
+            }
 
-        // 줌 아웃
-        mapView.zoomOut(true);
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-        /* Marker 생성 */
-        //mapPoint
-        MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(/*latY, longX*/37.53737528, 127.00557633);
-        //마커(Marker) 추가
-        MapPOIItem marker = new MapPOIItem();
-        marker.setItemName("축제 위치"); // =title
-        marker.setTag(0);
+            }
+        });
 
-        marker.setMapPoint(mapPoint);
-        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-        //맵 뷰에 추가
-        mapView.addPOIItem(marker);
+        fragmentTransaction.commit();
     }
 
-    @Override
-    public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
-
-    }
-
-    @Override
-    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
-
-    }
-
-    @Override
-    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
-
-    }
-
-    @Override
-    public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //Map Clear
-        mapViewContainer.removeAllViews();
-    }
 }

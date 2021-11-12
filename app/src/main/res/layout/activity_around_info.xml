@@ -1,41 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@android:id/tabhost"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".AroundInfoActivity">
 
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </TabWidget>
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:id="@+id/tab1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#dfdfdf"
-                android:orientation="horizontal">
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/tab2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/black"
-                android:orientation="horizontal">
-            </LinearLayout>
-        </FrameLayout>
-    </LinearLayout>
+        android:elevation="1dp"
+        android:background="@android:color/background_light"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabTextColor="#756A57"
+        app:tabSelectedTextColor="#FAA244" />
 
-</TabHost>
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_below="@id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    </FrameLayout>
+
+</RelativeLayout>
