@@ -96,4 +96,14 @@ public class AroundInfoActivity extends ConfigActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Map Clear
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(wifiFragment);
+        fragmentTransaction.remove(toiletFragment);
+        fragmentTransaction.commit();
+    }
+
 }
