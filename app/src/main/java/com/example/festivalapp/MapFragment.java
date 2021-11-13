@@ -153,24 +153,26 @@ public class MapFragment extends Fragment implements MapView.POIItemEventListene
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.e(TAG, "MapFragment:marker-for(document): " + document.getString("mapx"));
-                                /* 마커 생성 */
-                                //mapPoint
-                                double mapy = Double.parseDouble(Objects.requireNonNull(document.getString("mapy")));
-                                double mapx = Double.parseDouble(Objects.requireNonNull(document.getString("mapx")));
-                                MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(mapy, mapx);
-                                //마커(Marker) 추가
-                                MapPOIItem marker = new MapPOIItem();
-                                marker.setItemName(document.getString("title")); // =title
-                                marker.setTag(Integer.parseInt(Objects.requireNonNull(document.getString("contentid"))));
-                                Log.e("실행", "MapFragment:marker.setTag() = " + document.getString("contentid"));
-                                Log.e("실행", "MapFragment:marker.setItemName() = " + document.getString("title"));
-                                Log.e("실행", "MapFragment:marker.mapPoint = " + mapx + ", " + mapy);
-                                marker.setMapPoint(mapPoint);
-                                marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-                                marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-                                //맵 뷰에 추가
-                                mapView.addPOIItem(marker);
-                                mapPOIItems.add(marker);
+                                if(document.getString("mapx")!="" &&  document.getString("mapy")!=""){
+                                    /* 마커 생성 */
+                                    //mapPoint
+                                    double mapy = Double.parseDouble(Objects.requireNonNull(document.getString("mapy")));
+                                    double mapx = Double.parseDouble(Objects.requireNonNull(document.getString("mapx")));
+                                    MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(mapy, mapx);
+                                    //마커(Marker) 추가
+                                    MapPOIItem marker = new MapPOIItem();
+                                    marker.setItemName(document.getString("title")); // =title
+                                    marker.setTag(Integer.parseInt(Objects.requireNonNull(document.getString("contentid"))));
+                                    Log.e("실행", "MapFragment:marker.setTag() = " + document.getString("contentid"));
+                                    Log.e("실행", "MapFragment:marker.setItemName() = " + document.getString("title"));
+                                    Log.e("실행", "MapFragment:marker.mapPoint = " + mapx + ", " + mapy);
+                                    marker.setMapPoint(mapPoint);
+                                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+                                    marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                                    //맵 뷰에 추가
+                                    mapView.addPOIItem(marker);
+                                    mapPOIItems.add(marker);
+                                }
                             }
                         } else {
                             Log.e("실행", "query - task failed");
