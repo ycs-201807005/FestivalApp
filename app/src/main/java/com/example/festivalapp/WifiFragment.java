@@ -77,7 +77,7 @@ public class WifiFragment extends Fragment implements MapView.POIItemEventListen
             // 중심점 변경
             mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latY, longX), true);
             // 줌 레벨 변경
-            mapView.setZoomLevel(2, true);
+            mapView.setZoomLevel(4, true);
             // 줌 인
             mapView.zoomIn(true);
             // 줌 아웃
