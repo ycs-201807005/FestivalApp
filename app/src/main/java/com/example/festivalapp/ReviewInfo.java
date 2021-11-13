@@ -7,23 +7,35 @@ public class ReviewInfo{
     private String contentid;
     private String title;
     private String contents;
+    private String snslink;
     private double rating;
 
+    //use for Review Write
+    public ReviewInfo(String writer, String writedate, String contentid, String title, String contents, String snslink, double rating){
+        this.writer = writer;
+        this.writedate = writedate;
+        this.contentid = contentid;
+        this.title = title;
+        this.contents =contents;
+        this.snslink = snslink;
+        this.rating = rating;
+    }
+
     //use for Review Read
-    //use for User's Review List - title
-    public ReviewInfo(String reviewid, String writer, String writedate, String contentid, String title, String contents, double rating){
+    public ReviewInfo(String reviewid, String writer, String writedate, String contentid, String title, String contents, String snslink, double rating){
         this.reviewid = reviewid;
         this.writer = writer;
         this.writedate = writedate;
         this.contentid = contentid;
         this.title = title;
         this.contents =contents;
+        this.snslink = snslink;
         this.rating = rating;
     }
 
-    //use for Review Write
-    public ReviewInfo(String writer, String writedate, String contentid, String title, String contents, double rating){
-        this.writer = writer;
+    //use for User's Review List - title
+    public ReviewInfo(String reviewid, String writedate, String contentid, String title, String contents, double rating){
+        this.reviewid = reviewid;
         this.writedate = writedate;
         this.contentid = contentid;
         this.title = title;
@@ -38,6 +50,15 @@ public class ReviewInfo{
         this.writer = writer;
         this.contents =contents;
         this.rating = rating;
+    }
+
+
+    public String getSnslink() {
+        return snslink;
+    }
+
+    public void setSnslink(String snslink) {
+        this.snslink = snslink;
     }
 
     public String getReviewid() {

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -65,9 +66,14 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
             public void onClick(View view) {
                 //클릭 시, Review Read
                 Intent intent = new Intent(activity, ReviewReadActivity.class);
-                intent.putExtra("reviewid", mDataset.get(position).getReviewid());
-                intent.putExtra("contentid", mDataset.get(position).getContentid());
-                activity.startActivity(intent);
+                try {
+                    intent.putExtra("reviewid", mDataset.get(position).getReviewid());
+                    intent.putExtra("contentid", mDataset.get(position).getContentid());
+                    activity.startActivity(intent);
+                }
+                catch (Exception e){
+                    Toast.makeText(activity, "존재하지 않는 글입니다. ※아래로 스크롤하여 새로고침", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -77,10 +83,11 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                builder.setMessage("리뷰를 삭제합니다.");
+                builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.e(TAG,"showDialogForLocationSave() - 확인");
+                        Log.e(TAG,"showDialogForLocationSave() - 삭제");
                         db.collection("reviews").document(mDataset.get(position).getReviewid()).delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -95,6 +102,12 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.Vi
                                         Log.e(TAG, "Error deleting document", e);
                                     }
                                 });
+                    }
+                });
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
                     }
                 });
                 builder.show();

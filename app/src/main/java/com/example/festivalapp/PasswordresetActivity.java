@@ -35,10 +35,10 @@ public class PasswordresetActivity extends ConfigActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.sendButton:
-                    send();
+                    //send();
                     break;
                 case R.id.findcancelButton:
-                    onStartActivity(LoginActivity.class);
+                    finish();
                     break;
             }
         }

@@ -69,6 +69,13 @@ public class ReviewListActivity extends ConfigActivity {
     };
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        reviewsList.clear();
+    }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
 
@@ -88,13 +95,12 @@ public class ReviewListActivity extends ConfigActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String reviewid = document.getId(); //Review Doc Id
                                 String writedate = document.getData().get("writedate").toString();
-                                String writer = document.getData().get("writer").toString();
                                 String contentid = document.getData().get("contentid").toString();
                                 String title = document.getData().get("title").toString();
                                 String contents = document.getData().get("contents").toString();
                                 double rating = (double) document.getData().get("rating");
 
-                                reviewInfo = new ReviewInfo(reviewid, writer, writedate, contentid, title,contents,rating);
+                                reviewInfo = new ReviewInfo(reviewid, writedate, contentid, title,contents,rating);
                                 reviewsList.add(reviewInfo);
                             }
 
@@ -105,7 +111,6 @@ public class ReviewListActivity extends ConfigActivity {
                                 RecyclerView.Adapter mAdapter = new ReviewListAdapter(ReviewListActivity.this, reviewsList);
                                 recyclerView.setAdapter(mAdapter);
                             }
-
                         } else {
                             //task fail
                         }

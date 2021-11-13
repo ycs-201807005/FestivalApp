@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;
@@ -34,9 +36,9 @@ public class ReviewReadActivity extends ConfigActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private String Uid;
+    private String Uid, snsLinkText;
 
-    TextView btnRvDelete, tvTitle;
+    TextView btnRvDelete, tvTitle, txtSnsLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,20 @@ public class ReviewReadActivity extends ConfigActivity {
                 }
             });
         }
+
+        // sns 링크
+        txtSnsLink = (TextView)findViewById(R.id.txtSnsLink);
+        /* sns 링크 : default 테스트 */
+        snsLinkText = (String) txtSnsLink.getText();
+        txtSnsLink.setVisibility(View.VISIBLE);
+        txtSnsLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intenturl = new Intent(Intent.ACTION_VIEW);
+                intenturl.setData(Uri.parse("https://instagram.com/go9un_film?utm_medium=copy_link"));
+                startActivity(intenturl);
+            }
+        });
 
         /* 선택한 리뷰 내용 가져오기 */
         DocumentReference docRef = db.collection("reviews").document(reviewid);
@@ -106,6 +122,21 @@ public class ReviewReadActivity extends ConfigActivity {
                         TextView txtreview = (TextView)findViewById(R.id.txtreview);
                         txtreview.setText(contents);
 
+                        //sns 링크
+                        String link = document.getData().get("snslink").toString();
+                        if(link!=""){
+                            txtSnsLink.setVisibility(View.VISIBLE);
+                            txtSnsLink.setText(link);
+                            txtSnsLink.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intenturl = new Intent(Intent.ACTION_VIEW);
+                                    intenturl.setData(Uri.parse(link));
+                                    startActivity(intenturl);
+                                }
+                            });
+                        }
+
                     } else {
                         Log.d(TAG, "No such document");
                         Toastmsg("해당 글이 존재하지 않습니다.");
@@ -145,5 +176,6 @@ public class ReviewReadActivity extends ConfigActivity {
                 builder.show();
             }
         });
+
     }
 }

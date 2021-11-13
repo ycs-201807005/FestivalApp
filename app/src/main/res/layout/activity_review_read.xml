@@ -77,14 +77,31 @@
     <TextView
         android:id="@+id/txtreview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="500dp"
         android:layout_margin="5dp"
         android:layout_weight="1"
         android:background="#ffffff"
         android:textSize="17dp"
         android:textColor="#756A57"
         android:gravity="left"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:scrollbars="vertical"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Link :"
+        android:layout_marginLeft="5dp"/>
+    <TextView
+        android:id="@+id/txtSnsLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#ffffff"
+        android:paddingHorizontal="5dp"
+        android:textColor="#AC8852"
+        android:typeface="serif"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -95,7 +112,8 @@
             android:layout_width="match_parent"
             android:layout_height="122dp"
             android:layout_weight="1"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:visibility="gone">
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="match_parent"
@@ -117,7 +135,8 @@
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:background="@drawable/layout_background_photo"
-            app:srcCompat="@android:drawable/ic_menu_gallery" />
+            app:srcCompat="@android:drawable/ic_menu_gallery"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </LinearLayout>

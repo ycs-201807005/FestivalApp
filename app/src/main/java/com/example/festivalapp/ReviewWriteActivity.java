@@ -31,10 +31,10 @@ public class ReviewWriteActivity extends ConfigActivity {
 
     private Button btnRvInsert;
     private RatingBar ratingBar;
-    private TextView tvTitle, tvToday;
+    private TextView tvTitle, tvToday, txtSnsLink;
     private EditText txtreview;
 
-    private String writer, contentid, title, writedate, contents;
+    private String writer, contentid, title, writedate, snslink, contents;
     private double rating;
 
     @Override
@@ -58,11 +58,11 @@ public class ReviewWriteActivity extends ConfigActivity {
         tvToday.setText("date : " + writedate);
 
         txtreview = (EditText) findViewById(R.id.txtreview);
+        txtSnsLink = (TextView)findViewById(R.id.txtSnsLink);
 
         //리뷰 등록 버튼
         btnRvInsert = (Button)findViewById(R.id.btnRvInsert);
         btnRvInsert.setOnClickListener(onClickListener);
-
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -80,8 +80,11 @@ public class ReviewWriteActivity extends ConfigActivity {
                     contents = String.valueOf(txtreview.getText());
                     Log.e(TAG,"contents=" + contents);
 
+                    //링크
+                    snslink = String.valueOf(txtSnsLink.getText());
+
                   /* Firebase - 리뷰 등록 */
-                    reviewInfo = new ReviewInfo(writer, writedate, contentid, title, contents, rating);
+                    reviewInfo = new ReviewInfo(writer, writedate, contentid, title, contents, snslink, rating);
                     db.collection("reviews").add(reviewInfo)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
