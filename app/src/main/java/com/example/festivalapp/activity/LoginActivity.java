@@ -55,7 +55,6 @@ public class LoginActivity extends ConfigActivity {
                     break;
                 case R.id.btnSignUp:
                     onStartActivity(SignupActivity.class);
-                    finish();
                     break;
                 case R.id.btnForgot:
                     onStartActivity(PasswordresetActivity.class);

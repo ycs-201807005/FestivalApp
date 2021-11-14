@@ -37,6 +37,7 @@ public class SignupActivity extends ConfigActivity {
             switch (v.getId()){
                 case R.id.btnSignup:
                     signup();
+                    finish();
                     break;
             }
         }
