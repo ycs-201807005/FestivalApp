@@ -97,6 +97,23 @@ public class LoginActivity extends ConfigActivity {
         }
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        user = mAuth.getCurrentUser();
+        if(user != null){
+            if(user.getEmail().equals("test@manager.com")) {
+                onStartActivity(AllFestivalInfoUpdate.class); //Firebase 전체 데이터 관리
+                finish();
+            }
+            else {
+                onStartActivity(GPSActivity.class); //사용자 현채 위치 가져오기
+                finish();
+            }
+        }
+
+    }
+
     /* Toast Message*/
     private void startToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

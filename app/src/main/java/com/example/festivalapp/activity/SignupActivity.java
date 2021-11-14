@@ -37,7 +37,6 @@ public class SignupActivity extends ConfigActivity {
             switch (v.getId()){
                 case R.id.btnSignup:
                     signup();
-                    finish();
                     break;
             }
         }
@@ -67,7 +66,7 @@ public class SignupActivity extends ConfigActivity {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         Toastmsg("Sign Up Success.");
-                                                        onStartActivity(LoginActivity.class);
+                                                        //onStartActivity(LoginActivity.class);
                                                         finish();
                                                     }
                                                 })
