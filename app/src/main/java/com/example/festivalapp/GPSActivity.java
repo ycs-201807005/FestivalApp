@@ -190,7 +190,7 @@ public class GPSActivity extends ConfigActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(GPSActivity.this);
         builder.setTitle("위치 서비스 비활성화");
         builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n" + "위치 설정을 수정하실래요?");
-        builder.setCancelable(true);
+        builder.setCancelable(false);
         builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
@@ -213,7 +213,7 @@ public class GPSActivity extends ConfigActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(GPSActivity.this);
         builder.setTitle("현재 위치 정보");
         builder.setMessage("현재 위치가 설정됩니다.\n현재 주소 : " + addr);
-        builder.setCancelable(true);
+        builder.setCancelable(false);
         builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
@@ -272,7 +272,7 @@ public class GPSActivity extends ConfigActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(GPSActivity.this);
         builder.setTitle("기본 위치 정보");
         builder.setMessage("※퍼미션이 거부되었습니다.※\n현재 위치가 기본 주소로 설정됩니다.\n기본 주소 : " + addr);
-        builder.setCancelable(true);
+        builder.setCancelable(false);
         builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {

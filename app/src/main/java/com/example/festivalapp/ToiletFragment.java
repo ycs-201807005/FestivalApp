@@ -140,8 +140,8 @@ public class ToiletFragment extends Fragment implements MapView.POIItemEventList
                     location.setLatitude(lat);
 
                     //거리 : mlocation~location <= 500m
-                    float distance = mlocation.distanceTo(location); //m단위
-                    if (distance <= 5000) {
+                    //float distance = mlocation.distanceTo(location); //m단위
+                    //if (distance <= 5000) {
                         //mapPoint
                         MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(lat, lon);
                         //마커(Marker) 추가
@@ -153,7 +153,7 @@ public class ToiletFragment extends Fragment implements MapView.POIItemEventList
                         marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
                         //맵 뷰에 추가
                         mapView.addPOIItem(marker);
-                    }
+                    //}
                 }
                 hashMap.clear();
             }

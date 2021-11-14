@@ -152,7 +152,8 @@ public class ReviewReadActivity extends ConfigActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ReviewReadActivity.this);
-                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                builder.setMessage("리뷰를 삭제합니다.");
+                builder.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         Log.e(TAG,"showDialogForLocationSave() - 확인");
@@ -171,6 +172,12 @@ public class ReviewReadActivity extends ConfigActivity {
                                         Log.e(TAG, "Error deleting document", e);
                                     }
                                 });
+                    }
+                });
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
                     }
                 });
                 builder.show();
